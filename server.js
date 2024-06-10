@@ -3,6 +3,7 @@ import {config} from 'dotenv';
 import morgan from 'morgan';
 import cors from 'cors';
 import { connectDB } from './config/database.js';
+import { userRouter } from './routes/user.routes.js';
 
 config()
 
@@ -14,11 +15,7 @@ app.use(express.json())
 app.use(morgan('dev'))
 app.use(cors())
 
-app.get('/',(req,res)=>{
-    res.status(200).send({
-        message:'Server Running'
-    })
-})
+app.use('api/v1/user',userRouter)
 
 const port = process.env.PORT || 8080
 
