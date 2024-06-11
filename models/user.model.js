@@ -4,6 +4,7 @@ const userSchema = new mongoose.Schema(
     {
         username:{
             type:String,
+            lowercase:true,
             required:[true,'Username is required.'],
         },
         email:{
@@ -20,5 +21,5 @@ const userSchema = new mongoose.Schema(
     }
 )
 
-export const userModel = mongoose.model('users',userSchema)
+export const User = mongoose.model('users',userSchema)
 
