@@ -73,8 +73,28 @@ const registerController = asyncHandler(async (req, res) => {
     )
 })
 
+const authController = async (req,res) =>{
+    try{
+        const user = await User.findOne({_id:req.body.userId})
+
+        if(!user)
+            {
+                throw new ApiError(401,'User not found.')
+            }
+        else {
+            res.status(200).send(
+                new ApiResponse(200,{email:user.email,username:user.username})
+            )
+        }
+    } catch(error) {
+        console.log(error)
+        throw new ApiError(403,'Authorization Error')
+    }
+}
+
 
 export {
     loginController,
     registerController,
+    authController,
 }
