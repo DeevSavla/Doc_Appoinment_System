@@ -3,18 +3,24 @@ import { Form, Input, message } from 'antd'
 import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import { useDispatch } from 'react-redux'
+import { showloading,hideloading } from '../store/features/alertSlice'
 
 function Changepassword() {
 
+    const dispatch = useDispatch()
     const navigate = useNavigate()
 
     const handleSubmit = async (values) => {
         try {
+            dispatch(showloading())
             const res = await axios.post('http://localhost:8080/api/v1/user/changepassword', values)
+            dispatch(hideloading())
             message.success('Password Changed.')
             navigate('/login')
         }
         catch (error) {
+            dispatch(hideloading())
             if (error.response.data.message) {
                 message.error(error.response.data.message)
             }
