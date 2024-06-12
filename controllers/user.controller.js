@@ -3,6 +3,7 @@ import bcrypt from 'bcryptjs'
 import { ApiError } from '../utility/ApiError.js'
 import { ApiResponse } from '../utility/ApiResponse.js'
 import { asyncHandler } from '../utility/AsyncHandler.js'
+import jwt from 'jsonwebtoken'
 
 const loginController = asyncHandler(async (req, res) => {
     const { email, password } = req.body
@@ -25,8 +26,15 @@ const loginController = asyncHandler(async (req, res) => {
 
     const loggedInUser = await User.find({email}).select("-password")
 
+    const token = jwt.sign({id:isUser._id},process.env.JWT_SECRET,{expiresIn:'1d'})
+
+    const sendUser={
+        loggedInUser,
+        token,
+    }
+
     return res.status(201).json(
-        new ApiResponse(200,loggedInUser,'Login Success')
+        new ApiResponse(200,sendUser,'Login Success')
     )
 })
 
@@ -55,6 +63,7 @@ const registerController = asyncHandler(async (req, res) => {
     })
 
     const sendUser = await User.findById(newUser._id).select("-password")
+
     if (!sendUser) {
         throw new ApiError(500, 'Something went wrong while registering user.')
     }

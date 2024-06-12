@@ -13,13 +13,17 @@ function Register() {
       if (res.data) {
         message.success('Registered Successfully')
         navigate('/')
-      } else{
+      } else {
         message.error('Register Issue')
       }
     }
     catch (error) {
-      console.log(error)
-      message.error('Error while registering user.')
+      if (error.response.data.message) {
+        message.error(error.response.data.message)
+      }
+      else {
+        message.error('Registration Failed')
+      }
     }
   }
 

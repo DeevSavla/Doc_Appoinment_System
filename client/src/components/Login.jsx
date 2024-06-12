@@ -1,5 +1,5 @@
 import React from 'react'
-import { Form, Input,message } from 'antd'
+import { Form, Input, message } from 'antd'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
@@ -8,11 +8,12 @@ function Login() {
   const navigate = useNavigate()
 
   const handleSubmit = async (values) => {
-    console.log(values)
     try {
       const res = await axios.post('http://localhost:8080/api/v1/user/login', values)
-
+      console.log(res)
       if (res.data) {
+        const { token } = res.data.data
+        localStorage.setItem("token", token)
         message.success('Login Successful.')
         navigate('/')
       }
@@ -21,8 +22,12 @@ function Login() {
       }
     }
     catch (error) {
-      console.log(error)
-      message.error('Login Failed')
+      if (error.response.data.message) {
+        message.error(error.response.data.message)
+      }
+      else {
+        message.error('Login Failed')
+      }
     }
   }
 
