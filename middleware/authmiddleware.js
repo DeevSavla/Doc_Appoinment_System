@@ -5,6 +5,10 @@ import jwt from 'jsonwebtoken'
 export const authmiddleware = asyncHandler(async (req,res,next) =>{
     try {
         const token = req.headers['authorization'].split(" ")[1]
+
+        if(!token){
+            throw new ApiError(401,'Unauthorized Token.')
+        }
     
         jwt.verify(token,process.env.JWT_SECRET,(error,decode)=>{
             if(error)
