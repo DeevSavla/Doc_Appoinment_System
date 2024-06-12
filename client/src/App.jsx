@@ -2,7 +2,7 @@ import {BrowserRouter,Route,Routes} from 'react-router-dom'
 import HomePage from './components/HomePage'
 import Login from './components/Login'
 import Register from './components/Register'
-import { useState } from 'react'
+import Changepassword from './components/Changepassword'
 
 function App() {
 
@@ -12,6 +12,7 @@ function App() {
         <Route path='/' element={<HomePage/>}/>
         <Route path='/login' element={<Login/>}/>
         <Route path='/register' element={<Register/>}/>
+        <Route path='/changepass' element={<Changepassword/>}/>
       </Routes>
     </BrowserRouter>
   )

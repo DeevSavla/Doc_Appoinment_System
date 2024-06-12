@@ -24,17 +24,17 @@ const loginController = asyncHandler(async (req, res) => {
         throw new ApiError(403, 'Password Incorrect')
     }
 
-    const loggedInUser = await User.find({email}).select("-password")
+    const loggedInUser = await User.find({ email }).select("-password")
 
-    const token = jwt.sign({id:isUser._id},process.env.JWT_SECRET,{expiresIn:'1d'})
+    const token = jwt.sign({ id: isUser._id }, process.env.JWT_SECRET, { expiresIn: '1d' })
 
-    const sendUser={
+    const sendUser = {
         loggedInUser,
         token,
     }
 
     return res.status(201).json(
-        new ApiResponse(200,sendUser,'Login Success')
+        new ApiResponse(200, sendUser, 'Login Success')
     )
 })
 
@@ -73,28 +73,59 @@ const registerController = asyncHandler(async (req, res) => {
     )
 })
 
-const authController = async (req,res) =>{
-    try{
-        const user = await User.findOne({_id:req.body.userId})
+const authController = async (req, res) => {
+    try {
+        const user = await User.findOne({ _id: req.body.userId })
 
-        if(!user)
-            {
-                throw new ApiError(401,'User not found.')
-            }
+        if (!user) {
+            throw new ApiError(404, 'User not found.')
+        }
         else {
             res.status(200).send(
-                new ApiResponse(200,{email:user.email,username:user.username})
+                new ApiResponse(200, { email: user.email, username: user.username })
             )
         }
-    } catch(error) {
+    } catch (error) {
         console.log(error)
-        throw new ApiError(403,'Authorization Error')
+        throw new ApiError(403, 'Authorization Error')
     }
 }
 
+const changePasswordController = asyncHandler(async (req, res) => {
+
+    const { email, newpassword, confirmpassword } = req.body
+
+    if ([confirmpassword, newpassword, email].some((field) => field?.trim() === '')) {
+        throw new ApiError('All fields are required.')
+    }
+
+    const user = await User.findOne({ email })
+
+    if (!user) {
+        throw new ApiError(404, 'User Not Found.')
+    }
+    
+    if (confirmpassword !== newpassword) {
+        throw new ApiError(402, 'Password do not match.')
+    }
+
+    const salt = await bcrypt.genSalt(10)
+    const hashedPassword = await bcrypt.hash(req.body.newpassword, salt)
+
+    user.password=hashedPassword
+
+    await user.save()
+
+    const addedUser = await User.findOne({email})
+
+    res.status(200).send(
+        new ApiResponse(200,addedUser,'Password Changed Successfully.')
+    )
+})
 
 export {
     loginController,
     registerController,
     authController,
+    changePasswordController,
 }

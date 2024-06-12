@@ -42,6 +42,7 @@ function Login() {
       </Form.Item>
       <div className='flex justify-between text-center'>
         <Link to='/register' className='text-blue-500 hover:text-blue-800'>Not registered?</Link>
+        <Link to='/changepass' className='text-blue-500 hover:text-blue-800'>Forgot Password?</Link>
         <button className='bg-blue-500 text-white border-black px-2 py-1 rounded-lg'>Login</button>
       </div>
     </Form>
