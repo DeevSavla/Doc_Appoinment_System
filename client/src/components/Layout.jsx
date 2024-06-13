@@ -1,40 +1,50 @@
 import React from 'react'
 import { sideBarMenu } from '../Data/data'
-import { Link,useLocation } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 
-function Layout({children}) {
-    const location = useLocation()
+function Layout({ children }) {
+  const location = useLocation()
   return (
-    <div className='flex min-h-screen p-2 gap-5'>
-      <div className='w-1/5 flex flex-col'>
-        <div className='bg-red-950 text-white text-center text-xl p-2 mb-1'>DOC APP</div>
-        <div className='bg-red-950 text-white flex-grow'>
+    <div className="flex min-h-screen bg-gray-100 p-4 gap-6">
+      <aside className="w-1/5 flex flex-col bg-teal-600 text-white rounded-lg shadow-md">
+        <header className="text-center text-2xl font-bold p-4 bg-teal-700 rounded-t-lg">
+          DOC APP
+        </header>
+        <nav className="flex-grow p-2 space-y-2">
           {sideBarMenu.map((menu, index) => {
             const isActive = location.pathname === menu.path;
             return (
-              <div
+              <Link
                 key={index}
-                className={`flex items-center gap-3 mx-5 my-3 p-2 rounded-md transition-colors duration-200 ${
-                  isActive ? 'bg-white text-red-600 shadow-md' : 'hover:bg-red-800'
-                }`}
+                to={menu.path}
+                className={`flex items-center p-3 rounded-md transition-colors duration-200 ${isActive
+                    ? 'bg-teal-200 text-teal-800 font-semibold shadow-sm'
+                    : 'hover:bg-teal-500'
+                  }`}
               >
-                <i className={`${menu.icons} ${isActive ? 'text-red-600' : 'text-white'}`}></i>
-                <Link
-                  to={menu.path}
-                  className={`${isActive ? 'text-red-600 font-semibold' : 'text-white'} text-sm`}
-                >
+                <i className={`mr-3 ${menu.icons} ${isActive ? 'text-teal-800' : 'text-white'}`}></i>
+                <span className={`${isActive ? 'text-teal-800' : 'text-white'} text-sm`}>
                   {menu.name}
-                </Link>
-              </div>
+                </span>
+              </Link>
             );
           })}
-        </div>
-      </div>
-      <div className='w-4/5 flex flex-col gap-5'>
-        <div className='border border-black h-14'>Header</div>
-        <div className='border border-black flex-grow'>{children}</div>
-      </div>
+        </nav>
+      </aside>
+
+      <main className="w-4/5 flex flex-col gap-6">
+        <header className="h-16 bg-white rounded-lg shadow-sm p-4 flex items-center border border-gray-300">
+          Header
+        </header>
+        <section className="flex-grow bg-white rounded-lg shadow-sm p-6 border border-gray-300">
+          {children}
+        </section>
+      </main>
     </div>
+
+
+
+
   )
 }
 
