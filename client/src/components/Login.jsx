@@ -38,7 +38,7 @@ function Login() {
   }
 
   return (
-    <Form className="w-1/3 mx-auto bg-white shadow-md rounded-lg p-6 my-36" onFinish={handleSubmit}>
+      <Form className="w-1/3 mx-auto bg-white shadow-md rounded-lg p-6 my-36" onFinish={handleSubmit}>
     <h1 className="text-center text-2xl mb-5 text-teal-600">Login Form</h1>
     <Form.Item label="Email" name="email">
       <Input type="email" required />
