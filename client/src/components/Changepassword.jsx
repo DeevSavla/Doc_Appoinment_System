@@ -29,7 +29,7 @@ function Changepassword() {
 
     return (
         <Form className="w-1/3 mx-auto bg-white shadow-md rounded-lg p-6 my-36" onFinish={handleSubmit}>
-      <h1 className="text-center text-2xl mb-5 text-teal-600">Change Password</h1>
+      <h1 className="text-center text-2xl mb-5 text-blue-600">Change Password</h1>
       <Form.Item label="Email" name="email">
         <Input type="email" required />
       </Form.Item>
@@ -40,7 +40,7 @@ function Changepassword() {
         <Input type="password" required />
       </Form.Item>
       <div className="flex justify-between">
-        <button className="bg-teal-600 text-white px-4 py-2 rounded-lg hover:bg-teal-500 flex-grow">Submit</button>
+        <button className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-500 flex-grow">Submit</button>
       </div>
     </Form>
     )
