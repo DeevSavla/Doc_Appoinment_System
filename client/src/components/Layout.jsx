@@ -1,14 +1,15 @@
 import React from 'react'
 import { sideBarMenu } from '../Data/data'
 import { Link, useLocation } from 'react-router-dom'
+import logo from '../photos/logo.png'
 
 function Layout({ children }) {
   const location = useLocation()
   return (
     <div className="flex min-h-screen bg-gray-100 p-4 gap-6">
-      <aside className="w-1/5 flex flex-col bg-teal-600 text-white rounded-lg shadow-md">
-        <header className="text-center text-2xl font-bold p-4 bg-teal-700 rounded-t-lg">
-          DOC APP
+      <aside className="w-1/5 flex flex-col bg-blue-600 text-white rounded-lg shadow-md">
+        <header className="text-center text-2xl font-bold p-4 bg-blue-700 rounded-t-lg">
+        <img src={logo} alt="Logo" className='h-10' />
         </header>
         <nav className="flex-grow p-2 space-y-2">
           {sideBarMenu.map((menu, index) => {
@@ -18,12 +19,12 @@ function Layout({ children }) {
                 key={index}
                 to={menu.path}
                 className={`flex items-center p-3 rounded-md transition-colors duration-200 ${isActive
-                    ? 'bg-teal-200 text-teal-800 font-semibold shadow-sm'
-                    : 'hover:bg-teal-500'
+                    ? 'bg-teal-200 text-blue-800 font-semibold shadow-sm'
+                    : 'hover:bg-blue-500'
                   }`}
               >
-                <i className={`mr-3 ${menu.icons} ${isActive ? 'text-teal-800' : 'text-white'}`}></i>
-                <span className={`${isActive ? 'text-teal-800' : 'text-white'} text-sm`}>
+                <i className={`mr-3 ${menu.icons} ${isActive ? 'text-blue-800' : 'text-white'}`}></i>
+                <span className={`${isActive ? 'text-blue-800' : 'text-white'} text-sm`}>
                   {menu.name}
                 </span>
               </Link>

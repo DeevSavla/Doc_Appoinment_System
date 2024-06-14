@@ -18,7 +18,7 @@ function Register() {
       dispatch(hideloading())
       if (res.data) {
         message.success('Registered Successfully')
-        navigate('/')
+        navigate('/homepage')
       } else {
         message.error('Register Issue')
       }

@@ -20,7 +20,7 @@ function Login() {
         const { token } = res.data.data
         localStorage.setItem("token", token)
         message.success('Login Successful.')
-        navigate('/')
+        navigate('/homepage')
       }
       else {
         message.error('Login Issue')
@@ -39,7 +39,7 @@ function Login() {
 
   return (
       <Form className="w-1/3 mx-auto bg-white shadow-md rounded-lg p-6 my-36" onFinish={handleSubmit}>
-    <h1 className="text-center text-2xl mb-5 text-teal-600">Login Form</h1>
+    <h1 className="text-center text-2xl mb-5 text-blue-600">Login Form</h1>
     <Form.Item label="Email" name="email">
       <Input type="email" required />
     </Form.Item>
@@ -47,9 +47,9 @@ function Login() {
       <Input type="password" required />
     </Form.Item>
     <div className="flex justify-between">
-      <Link to="/register" className="text-teal-600 hover:text-teal-800">Not registered?</Link>
-      <Link to="/changepass" className="text-teal-600 hover:text-teal-800">Forgot Password?</Link>
-      <button className="bg-teal-600 text-white px-4 py-2 rounded-lg hover:bg-teal-500">Login</button>
+      <Link to="/register" className="text-blue-600 hover:text-blue-800">Not registered?</Link>
+      <Link to="/changepass" className="text-blue-600 hover:text-blue-800">Forgot Password?</Link>
+      <button className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-500">Login</button>
     </div>
   </Form>
   )
