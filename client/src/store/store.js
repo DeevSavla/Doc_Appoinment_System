@@ -3,6 +3,6 @@ import { alertSlice } from './features/alertSlice'
 
 export default configureStore({
     reducer:{
-        alerts:alertSlice.reducer
+        alerts:alertSlice.reducer,
     }
 })

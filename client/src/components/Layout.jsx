@@ -1,10 +1,13 @@
-import React from 'react'
+import React,{useEffect} from 'react'
 import { sideBarMenu } from '../Data/data'
 import { Link, useLocation } from 'react-router-dom'
 import logo from '../photos/logo.png'
+import axios from 'axios'
 
 function Layout({ children }) {
+
   const location = useLocation()
+
   return (
     <div className="flex min-h-screen bg-gray-100 p-4 gap-6">
       <aside className="w-1/5 flex flex-col bg-blue-600 text-white rounded-lg shadow-md">
@@ -35,7 +38,7 @@ function Layout({ children }) {
 
       <main className="w-4/5 flex flex-col gap-6">
         <header className="h-16 bg-white rounded-lg shadow-sm p-4 flex items-center border border-gray-300">
-          Header
+          header
         </header>
         <section className="flex-grow bg-white rounded-lg shadow-sm p-6 border border-gray-300">
           {children}

@@ -15,7 +15,6 @@ function Login() {
       dispatch(showloading())
       const res = await axios.post('http://localhost:8080/api/v1/user/login', values)
       dispatch(hideloading())
-      console.log(res)
       if (res.data) {
         const { token } = res.data.data
         localStorage.setItem("token", token)
