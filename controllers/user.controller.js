@@ -81,8 +81,9 @@ const authController = async (req, res) => {
             throw new ApiError(404, 'User not found.')
         }
         else {
+            const authUser = await User.findOne({ _id: req.body.userId }).select("-password")
             res.status(200).send(
-                new ApiResponse(200, { email: user.email, username: user.username })
+                new ApiResponse(200, { data:authUser })
             )
         }
     } catch (error) {

@@ -17,8 +17,8 @@ function Register() {
       const res = await axios.post('http://localhost:8080/api/v1/user/register', values)
       dispatch(hideloading())
       if (res.data) {
-        message.success('Registered Successfully')
-        navigate('/homepage')
+        message.success('Registered Successfully');
+        navigate('/')
       } else {
         message.error('Register Issue')
       }

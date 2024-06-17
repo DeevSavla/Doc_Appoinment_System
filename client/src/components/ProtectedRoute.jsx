@@ -37,7 +37,7 @@ function ProtectedRoute({ children }) {
       if (!user) {
         getData();
       }
-    }, [user])
+    }, [user,getData])
 
     if (localStorage.getItem('token')) {
         return children;
