@@ -9,6 +9,7 @@ import ProtectedRoute from './components/ProtectedRoute'
 import PublicRoute from './components/PublicRoute'
 import MainLayout from './components/MainLayout'
 import MainPage from './components/MainPage'
+import ApplyDoctor from './components/ApplyDoctor'
 
 function App() {
   const { loading } = useSelector(state => state.alerts)
@@ -17,6 +18,7 @@ function App() {
       {loading ? (<Spinner />) : (
         <Routes>
           <Route path='/' element={<MainLayout><MainPage/></MainLayout>} />
+          <Route path='/apply-doctor' element={<ProtectedRoute><ApplyDoctor/></ProtectedRoute>}/>
           <Route path='/homepage' element={<ProtectedRoute><HomePage /></ProtectedRoute>} />
           <Route path='/login' element={<PublicRoute><MainLayout><Login /></MainLayout></PublicRoute>} />
           <Route path='/register' element={<PublicRoute><MainLayout><Register /></MainLayout></PublicRoute>} />

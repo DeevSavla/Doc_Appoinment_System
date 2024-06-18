@@ -10,7 +10,13 @@ function HomePage() {
     return (<Spinner/>)
   }
   else{
-    return (<Layout><div>HomePage</div></Layout>)
+    return (
+      <Layout>
+        <div>
+          HomePage
+        </div>
+      </Layout>
+    )
   }
 }
 
