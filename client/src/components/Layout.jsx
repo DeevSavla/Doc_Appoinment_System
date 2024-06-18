@@ -2,22 +2,25 @@ import React from 'react'
 import { adminMenu, userMenu } from '../Data/data'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import logo from '../photos/logo.png'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import Spinner from './Spinner'
 import {message} from 'antd'
+import { setUser } from '../store/features/userSlice'
 
 function Layout({ children }) {
   const navigate = useNavigate()
   const location = useLocation()
+  const dispatch = useDispatch()
   const { user } = useSelector(state => state.user)
   if (!user) {
     return (<Spinner />)
   }
   else {
     const sidemenu = user.data.isAdmin ? adminMenu : userMenu
-
+  
     const logoutHandler = () =>{
       localStorage.clear()
+      dispatch(setUser(null))
       message.success('Logout Succesfull.')
       navigate('/')
     }
