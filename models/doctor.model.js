@@ -36,9 +36,13 @@ const doctorSchema = new mongoose.Schema(
             type:String,
             required:[true,'Experience is required.']
         },
-        fees:{
+        feesPerConsultation:{
             type:Number,
             required:[true,'Fee is required.']
+        },
+        status :{
+            type:String,
+            default:'Pending',
         },
         timings:{
             type:Object,

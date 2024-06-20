@@ -1,4 +1,5 @@
 import { User } from '../models/user.model.js'
+import {Doctor} from '../models/doctor.model.js'
 import bcrypt from 'bcryptjs'
 import { ApiError } from '../utility/ApiError.js'
 import { ApiResponse } from '../utility/ApiResponse.js'
@@ -124,9 +125,35 @@ const changePasswordController = asyncHandler(async (req, res) => {
     )
 })
 
+const applyDoctorController = asyncHandler(async (req,res)=>{
+    const newDoctor = await Doctor({...req.body,status:'Pending'})
+    await newDoctor.save()
+    const admin = await User.findOne({isAdmin:true})
+    console.log(admin)
+    const notifications = admin.notifications
+    notifications.push({
+        type:'apply-doctor-request',
+        message:`${newDoctor.firstName} ${newDoctor.lastName} has applied for a Doctor Account.`,
+        data :{
+            doctorId : newDoctor._id,
+            name : newDoctor.firstName + " " + newDoctor.lastName,
+            onClickPath : '/admin/doctors'
+        }
+    })
+    console.log(notifications)
+    await User.findByIdAndUpdate(admin._id,{notifications})
+    console.log(admin)
+
+    res.status(200).send(
+        new ApiResponse(200,'Doctor Account Applied Successful.')
+    )
+}
+)
+
 export {
     loginController,
     registerController,
     authController,
     changePasswordController,
+    applyDoctorController,
 }
