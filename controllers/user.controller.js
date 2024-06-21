@@ -147,10 +147,47 @@ const applyDoctorController = asyncHandler(async (req,res)=>{
 }
 )
 
+const getAllNotificationsController = asyncHandler(async(req,res)=>{
+
+    const admin = await User.findOne({ _id: req.body.userId })
+
+    const {notifications,seennotifications} = admin
+
+    seennotifications.push(...notifications)
+
+    admin.notifications = []
+
+    const updateAdmin = await admin.save()
+
+    updateAdmin.password = undefined
+
+    res.status(200).send(
+        new ApiResponse(200,updateAdmin,'All Notifications are read.')
+    )
+})
+
+const deleteAllNotificationsController = asyncHandler(async(req,res)=>{
+    const admin = await User.findOne({ _id: req.body.userId })
+
+    admin.seennotifications=[]
+
+    admin.notifications = []
+
+    const updateAdmin = await admin.save()
+
+    updateAdmin.password = undefined
+
+    res.status(200).send(
+        new ApiResponse(200,updateAdmin,'All Notifications are deleted.')
+    )
+})
+
 export {
     loginController,
     registerController,
     authController,
     changePasswordController,
     applyDoctorController,
+    getAllNotificationsController,
+    deleteAllNotificationsController,
 }
