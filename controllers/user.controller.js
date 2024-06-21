@@ -48,7 +48,7 @@ const registerController = asyncHandler(async (req, res) => {
     }
 
     const existingUser = await User.findOne({ email })
-
+    
     if (existingUser) {
         throw new ApiError(409, 'User already exists')
     }
@@ -74,7 +74,7 @@ const registerController = asyncHandler(async (req, res) => {
     )
 })
 
-const authController = async (req, res) => {
+const authController = asyncHandler(async (req, res) => {
     try {
         const user = await User.findOne({ _id: req.body.userId })
 
@@ -91,7 +91,7 @@ const authController = async (req, res) => {
         console.log(error)
         throw new ApiError(403, 'Authorization Error')
     }
-}
+})
 
 const changePasswordController = asyncHandler(async (req, res) => {
 
@@ -129,7 +129,6 @@ const applyDoctorController = asyncHandler(async (req,res)=>{
     const newDoctor = await Doctor({...req.body,status:'Pending'})
     await newDoctor.save()
     const admin = await User.findOne({isAdmin:true})
-    console.log(admin)
     const notifications = admin.notifications
     notifications.push({
         type:'apply-doctor-request',
@@ -140,9 +139,7 @@ const applyDoctorController = asyncHandler(async (req,res)=>{
             onClickPath : '/admin/doctors'
         }
     })
-    console.log(notifications)
     await User.findByIdAndUpdate(admin._id,{notifications})
-    console.log(admin)
 
     res.status(200).send(
         new ApiResponse(200,'Doctor Account Applied Successful.')

@@ -13,6 +13,7 @@ function Register() {
 
   const handleSubmit = async (values) => {
     try {
+      localStorage.clear()
       dispatch(showloading())
       const res = await axios.post('http://localhost:8080/api/v1/user/register', values)
       dispatch(hideloading())
