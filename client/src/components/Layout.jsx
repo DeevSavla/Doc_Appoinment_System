@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { adminMenu, userMenu } from '../Data/data'
-import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom'
+import { Link,useLocation, useNavigate } from 'react-router-dom'
 import logo from '../photos/logo.png'
 import { useDispatch, useSelector } from 'react-redux'
 import Spinner from './Spinner'
