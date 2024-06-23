@@ -11,6 +11,8 @@ import MainLayout from './components/MainLayout'
 import MainPage from './components/MainPage'
 import ApplyDoctor from './components/ApplyDoctor'
 import NotificationPage from './components/NotificationPage'
+import Users from './components/Admin/Users'
+import Doctors from './components/Admin/Doctors'
 
 function App() {
   const { loading } = useSelector(state => state.alerts)
@@ -25,6 +27,8 @@ function App() {
           <Route path='/register' element={<PublicRoute><MainLayout><Register /></MainLayout></PublicRoute>} />
           <Route path='/changepass' element={<PublicRoute><MainLayout><Changepassword /></MainLayout></PublicRoute> } />
           <Route path='/notificationpage' element={<ProtectedRoute><NotificationPage/></ProtectedRoute>} />
+          <Route path='/admin/users' element={<ProtectedRoute><Users/></ProtectedRoute>}/>
+          <Route path='/admin/doctors' element={<ProtectedRoute><Doctors/></ProtectedRoute>}/>
         </Routes>
       )}
     </BrowserRouter>

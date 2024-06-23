@@ -70,7 +70,7 @@ function Layout({ children }) {
 
         <main className="flex-1 flex flex-col gap-6">
           <header className="h-16 bg-white rounded-lg shadow-sm p-4 flex items-center border border-gray-300">
-            <div onClick={()=>{navigate('/notificationpage')}}><Badge count={user && user.data.notifications.length}>
+            <div onClick={()=>{navigate('/notificationpage')}}><Badge count={user?.data?.notifications?.length ?? 0}>
               <Avatar shape="square" size="large" />
             </Badge></div>
             <p className="ml-auto text-gray-800 text-xl">{user.data.username}</p>
