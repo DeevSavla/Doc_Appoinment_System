@@ -18,7 +18,7 @@ function Doctors() {
         }
       )
       if(res.data) {
-        setUser(res.data.data)
+        setDoctor(res.data.data)
         message.success('Got all Doctors.')
       } else {
         message.error('Fetching Doctors Failed.')
@@ -33,6 +33,33 @@ function Doctors() {
     }
   }
 
+  const handleAccountStatus = async(record,status) =>{
+    try{
+      const res = await axios.post('http://localhost:8080/api/v1/admin/changeAccountStatus',
+        {
+          doctorId:record._id,
+          userId : record.userId,
+          status:status
+        },
+        {
+          headers:{
+            Authorization:`Bearer ${localStorage.getItem('token')}`  
+          }
+        }
+      )
+      if(res.data) {
+        message.success('Account Status Changed.')
+      }
+    } catch(error) {
+      if (error.response.data.message) {
+        message.error(error.response.data.message)
+      }
+      else {
+        message.error('Some error in updating status.')
+      }
+    }
+  }
+
   useEffect(() => {
     if (!hasFetched) {
       getDoctors();
@@ -42,27 +69,34 @@ function Doctors() {
 
   const columns = [
     {
-      title:'First Name',
-      dataIndex:'firstName',
-    },
-    {
-      title:'Last Name',
-      dataIndex:'lastName',
-    },
-    {
-      title:'Doctor',
-      dataIndex:'isDoctor',
-      render : (text,record)=>(
-        <span>{record.isDoctor ? 'Yes':'No'}</span>
+      title:'Name',
+      dataIndex:'name',
+      render:(text,record)=> (
+        <span>{record.firstName} {record.lastName}</span>
       )
+    },
+    {
+      title:'Phone',
+      dataIndex:'phone'
+    },
+    {
+      title:'Status',
+      dataIndex:'status'
     },
     {
       title:'Actions',
       dataIndex:'actions',
       render : (text,record) =>(
-        <div>
-          <button className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-500">Block</button>
-        </div>
+        <div>{record.status === 'Pending' ? 
+          <button className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-500"
+            onClick={()=>handleAccountStatus(record,'Approved')}>
+            Approve
+          </button>
+          :
+          <button className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-500">
+            Reject
+          </button>
+           }</div>
       )
     }
   ]
