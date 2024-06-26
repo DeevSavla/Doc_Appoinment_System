@@ -38,20 +38,21 @@ const changeAccountStatusController = asyncHandler(async (req, res) => {
 
         const doctor = await Doctor.findByIdAndUpdate(doctorId, { status })
         const user = await User.findOne({ _id: doctor.userId })
-        notifications = user.notifications
+        const notifications = user.notifications
         notifications.push({
+            doctorId : doctor._id,
             type: 'doctor-approve-message',
             message: `Your Doctor Account Request has been ${status}.`,
             onClickPath: '/notification',
         })
-        if (doctor.status === 'Approved') {
-            user.isDoctor = true
-        }
+        user.isDoctor = true
         await user.save()
+        console.log(user)
         res.status(201).send(
             new ApiResponse(201, doctor, 'Account Status Updated')
         )
     } catch (error) {
+        console.log(error)
         throw new ApiError(400, 'Some error occured.')
     }
 

@@ -60,6 +60,7 @@ function NotificationPage() {
           }
         );
         dispatch(hideloading());
+        console.log(res.data)
         if (res.data) {
           message.success('All Notifications Deleted.');
           dispatch(setUser({ ...user, data: { ...user.data, seennotifications: res.data.seennotifications } }));
@@ -91,7 +92,6 @@ function NotificationPage() {
                 user.data.notifications.map((nmessage) => (
                   <div
                     className="bg-white rounded-lg shadow-md mb-4 cursor-pointer"
-                    key={nmessage.data.doctorId}
                     onClick={() => navigate(nmessage.onClickPath)}
                   >
                     <div className="p-4">{nmessage.message}</div>
@@ -112,10 +112,9 @@ function NotificationPage() {
                 user.data.seennotifications.map((nmessage) => (
                   <div
                     className="bg-white rounded-lg shadow-md mb-4 cursor-pointer"
-                    key={nmessage.data.doctorId}
                     onClick={() => navigate(nmessage.onClickPath)}
                   >
-                    <div className="p-4">{nmessage.message}</div>
+                  <div className="p-4">{nmessage.message}</div>
                   </div>
                 ))
               ) : (
