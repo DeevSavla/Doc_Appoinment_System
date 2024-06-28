@@ -21,13 +21,13 @@ function ApplyDoctor() {
         const handleSubmit = async (values) => {
             try {
                 dispatch(showloading())
-                const res = await axios.post('http://localhost:8080/api/v1/user/apply-doctor',{...values,userId:user._id},{
-                    headers:{
-                        Authorization:`Bearer ${localStorage.getItem('token')}`
+                const res = await axios.post('http://localhost:8080/api/v1/user/apply-doctor', { ...values, userId: user._id }, {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem('token')}`
                     }
                 })
                 dispatch(hideloading())
-                if(res.data){
+                if (res.data) {
                     message.success('Apply Doctor Successfull.')
                     navigate('/homepage')
                 }
@@ -190,7 +190,11 @@ function ApplyDoctor() {
                                     rules={[{ required: true, message: 'Timings are required' }]}
                                     className="w-full"
                                 >
-                                    <TimePicker.RangePicker format="HH:mm" className="w-full p-2 border border-gray-300 rounded-md" />
+                                    <Input
+                                        type="text"
+                                        placeholder="Your timings"
+                                        className="w-full p-2 border border-gray-300 rounded-md"
+                                    />
                                 </Form.Item>
                             </Col>
                             <Col xs={24} md={24} lg={8}>
