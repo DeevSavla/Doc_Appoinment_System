@@ -17,11 +17,29 @@ function Layout({ children }) {
   }
   else {
 
+      const doctorMenu = [
+      {
+        name: "Home",
+        path: "/",
+        icon: "fa-solid fa-house",
+      },
+      {
+        name: "Appointments",
+        path: "/appointments",
+        icon: "fa-solid fa-list",
+      },
+      {
+        name: "Profile",
+        path: `/doctor/profile/${user?.data._id}`,
+        icon: "fa-solid fa-user",
+      },
+    ];
+
     const [isOpen, setIsOpen] = useState(false);
 
     const toggleSidebar = () => setIsOpen(!isOpen);
 
-    const sidemenu = user.data.isAdmin ? adminMenu : userMenu
+    const sidemenu = user.data.isAdmin ? adminMenu : user.data.isDoctor ? doctorMenu : userMenu
 
     const logoutHandler = () => {
       localStorage.clear()

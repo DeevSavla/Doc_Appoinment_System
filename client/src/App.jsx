@@ -13,6 +13,7 @@ import ApplyDoctor from './components/ApplyDoctor'
 import NotificationPage from './components/NotificationPage'
 import Users from './components/Admin/Users'
 import Doctors from './components/Admin/Doctors'
+import Profile from './components/Doctor/Profile'
 
 function App() {
   const { loading } = useSelector(state => state.alerts)
@@ -29,6 +30,7 @@ function App() {
           <Route path='/notificationpage' element={<ProtectedRoute><NotificationPage/></ProtectedRoute>} />
           <Route path='/admin/users' element={<ProtectedRoute><Users/></ProtectedRoute>}/>
           <Route path='/admin/doctors' element={<ProtectedRoute><Doctors/></ProtectedRoute>}/>
+          <Route path='/doctor/profile/:id' element={<ProtectedRoute><Profile/></ProtectedRoute>} />
         </Routes>
       )}
     </BrowserRouter>
