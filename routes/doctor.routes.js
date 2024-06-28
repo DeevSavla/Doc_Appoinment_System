@@ -4,6 +4,6 @@ import {getDoctorInfoController} from '../controllers/doctor.controller.js'
 
 const doctorRouter = express.Router()
 
-doctorRouter.get('/get-doctor-info',authmiddleware,getDoctorInfoController)
+doctorRouter.post('/get-doctor-info',authmiddleware,getDoctorInfoController)
 
 export {doctorRouter}
