@@ -182,6 +182,18 @@ const deleteAllNotificationsController = asyncHandler(async(req,res)=>{
     )
 })
 
+const getDocController = asyncHandler(async(req,res)=>{
+    const doctor = await Doctor.find({status:'Approved'})
+
+    if(!doctor) {
+        throw new ApiError(404,'No Doctor Found.')
+    }
+
+    res.status(201).send(
+        new ApiResponse(201,doctor,'All Doctors Fetched.')
+    )
+})
+
 export {
     loginController,
     registerController,
@@ -190,4 +202,5 @@ export {
     applyDoctorController,
     getAllNotificationsController,
     deleteAllNotificationsController,
+    getDocController,
 }

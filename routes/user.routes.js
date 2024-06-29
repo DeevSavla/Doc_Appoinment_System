@@ -6,6 +6,7 @@ import {loginController,
         applyDoctorController,
         getAllNotificationsController,
         deleteAllNotificationsController,
+        getDocController,
     } from "../controllers/user.controller.js";
 import { authmiddleware } from "../middleware/authmiddleware.js";
 
@@ -18,5 +19,6 @@ userRouter.post('/changepassword',changePasswordController)
 userRouter.post('/apply-doctor',authmiddleware,applyDoctorController)
 userRouter.post('/get-all-notifications',authmiddleware,getAllNotificationsController)
 userRouter.post('/delete-all-notifications',authmiddleware,deleteAllNotificationsController)
+userRouter.post('/getdoctor',authmiddleware,getDocController)
 
 export {userRouter}
