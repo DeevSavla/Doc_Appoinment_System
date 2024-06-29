@@ -7,7 +7,7 @@ function DoctorList({ doctor }) {
         <>
             <div
                 className="bg-white rounded-lg shadow-lg overflow-hidden cursor-pointer transform transition hover:scale-105 m-2 md:m-4"
-                onClick={() => navigate(`/doctor/book-appointment/${doctor._id}`)}
+                onClick={() => navigate(`/doctor/booking-appointment/${doctor._id}`)}
             >
                 <div className="bg-blue-500 text-white px-4 py-2 font-bold text-lg md:text-xl">
                     Dr. {doctor.firstName} {doctor.lastName}
