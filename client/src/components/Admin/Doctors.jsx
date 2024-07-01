@@ -50,7 +50,6 @@ function Doctors() {
       
       if(res.data) {
         message.success('Account Status Changed.')
-        console.log(res.data)
         window.location.reload()
       }
     } catch(error) {

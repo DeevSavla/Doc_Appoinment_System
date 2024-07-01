@@ -5,11 +5,6 @@ export const userMenu = [
       icon: "fa-solid fa-house",
     },
     {
-      name: "Book Appointments",
-      path: "/appointments",
-      icon: "fa-solid fa-list",
-    },
-    {
       name: "Apply Doctor",
       path: "/apply-doctor",
       icon: "fa-solid fa-user-doctor",
