@@ -1,5 +1,6 @@
 import { User } from '../models/user.model.js'
 import {Doctor} from '../models/doctor.model.js'
+import { Appointment } from '../models/appointment.model.js'
 import bcrypt from 'bcryptjs'
 import { ApiError } from '../utility/ApiError.js'
 import { ApiResponse } from '../utility/ApiResponse.js'
@@ -194,6 +195,26 @@ const getDocController = asyncHandler(async(req,res)=>{
     )
 })
 
+const bookAppointmentController = asyncHandler(async(req,res)=>{
+    console.log(req.body)
+    req.body.status = 'Pending'
+    const newAppointment = new Appointment(req.body)
+    await newAppointment.save()
+
+    const user = await User.findOne({_id:req.body.doctorInfo.userId})
+
+    user.notifications.push({
+        type:'New-appointment-request',
+        message : `An appointment request from ${req.body.userInfo.data.username}`,
+    })
+
+    await user.save()
+
+    res.status(200).send(
+        new ApiResponse(200,'Appointment Book Successfully.')
+    )
+})
+
 export {
     loginController,
     registerController,
@@ -203,4 +224,5 @@ export {
     getAllNotificationsController,
     deleteAllNotificationsController,
     getDocController,
+    bookAppointmentController,
 }
