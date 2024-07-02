@@ -205,7 +205,7 @@ const bookAppointmentController = asyncHandler(async(req,res)=>{
 
     user.notifications.push({
         type:'New-appointment-request',
-        message : `An appointment request from ${req.body.userInfo.data.username}`,
+        message : `An appointment request from ${req.body.userInfo}`,
     })
 
     await user.save()

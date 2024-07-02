@@ -31,7 +31,7 @@ function BookingPage() {
             doctorId: params.doctorId,
             userId: user._id,
             doctorInfo: singleDoctor,
-            userInfo:user,
+            userInfo:user.data.username,
             date: date,
             time: time
           },
