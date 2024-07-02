@@ -8,6 +8,7 @@ import {loginController,
         deleteAllNotificationsController,
         getDocController,
         bookAppointmentController,
+        bookingAvailabilityController,
     } from "../controllers/user.controller.js";
 import { authmiddleware } from "../middleware/authmiddleware.js";
 
@@ -22,5 +23,6 @@ userRouter.post('/get-all-notifications',authmiddleware,getAllNotificationsContr
 userRouter.post('/delete-all-notifications',authmiddleware,deleteAllNotificationsController)
 userRouter.post('/getdoctor',authmiddleware,getDocController)
 userRouter.post('/book-appointment',authmiddleware,bookAppointmentController)
+userRouter.post('booking-availability',authmiddleware,bookingAvailabilityController)
 
 export {userRouter}

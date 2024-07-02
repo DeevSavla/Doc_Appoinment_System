@@ -20,8 +20,33 @@ function BookingPage() {
     const params = useParams()
     const [singleDoctor, setSingleDoctor] = useState(null)
 
-    const handleAvailability = () => {
-      console.log("Checking availability for:", date, time);
+    const handleAvailability = async () => {
+      try {
+        const res = await axios.post('http://localhost:8080/api/v1/user/booking-availability',
+          {
+            doctorId:params.doctorId,
+            date:date,
+            time:time,
+            doctorInfo: singleDoctor,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem('token')}`
+            }
+          }
+        )
+
+        if(res.data) {
+          message.success('Booking Done.')
+        }
+        
+      } catch(error) {
+        if(error.response.data.message) {
+          message.error(error.response.data.message)
+        } else {
+          message.error('Booking Error.')
+        }
+      }
     };
 
     const handleBooking = async () => {

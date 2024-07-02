@@ -196,7 +196,6 @@ const getDocController = asyncHandler(async(req,res)=>{
 })
 
 const bookAppointmentController = asyncHandler(async(req,res)=>{
-    console.log(req.body)
     req.body.status = 'Pending'
     const newAppointment = new Appointment(req.body)
     await newAppointment.save()
@@ -215,6 +214,41 @@ const bookAppointmentController = asyncHandler(async(req,res)=>{
     )
 })
 
+const bookingAvailabilityController = asyncHandler(async (req,res)=>{
+    console.log(req.body)
+    const doctor = await Doctor.findOne({_id:req.body.doctorId})
+
+    if(!doctor) {
+        throw new ApiError(404,'No Doctor Found.')
+    }
+
+    const date = req.body.date
+    const time = req.body.time
+    const timings = doctor.timings.split("-")
+    const startTime = timings[0]
+    const finishTime = timings[1]
+    const doctorId = req.body.doctorId
+    
+    const appointments = await Appointment.find({doctorId,
+        date,
+        time:{
+            $gte:startTime,$lte:finishTime
+        }
+    })   
+    console.log(appointments)
+    
+    if(appointments.length>0) {
+        res.status(201).send(
+            new ApiResponse(201,'Doctor is busy at this time.')
+        )
+    }
+    else {
+        res.status(201).send(
+            new ApiResponse(201,'Doctor is available at this time.')
+        )
+    }
+})
+
 export {
     loginController,
     registerController,
@@ -225,4 +259,5 @@ export {
     deleteAllNotificationsController,
     getDocController,
     bookAppointmentController,
+    bookingAvailabilityController,
 }
