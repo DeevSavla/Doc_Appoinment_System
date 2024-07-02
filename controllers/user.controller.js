@@ -214,40 +214,42 @@ const bookAppointmentController = asyncHandler(async(req,res)=>{
     )
 })
 
-const bookingAvailabilityController = asyncHandler(async (req,res)=>{
-    console.log(req.body)
-    const doctor = await Doctor.findOne({_id:req.body.doctorId})
+const bookingAvailabilityController = asyncHandler(async (req, res) => {
+    console.log(req.body);
+    const { doctorId, date, time } = req.body;
+    const doctor = await Doctor.findOne({ _id: doctorId });
 
-    if(!doctor) {
-        throw new ApiError(404,'No Doctor Found.')
+    if (!doctor) {
+        throw new ApiError(404, 'No Doctor Found.');
     }
 
-    const date = req.body.date
-    const time = req.body.time
-    const timings = doctor.timings.split("-")
-    const startTime = timings[0]
-    const finishTime = timings[1]
-    const doctorId = req.body.doctorId
-    
-    const appointments = await Appointment.find({doctorId,
+    const [startTime, finishTime] = doctor.timings.split("-");
+
+    function isTimeInRange(time, start, finish) {
+        return time >= start && time <= finish;
+    }
+
+    if (!isTimeInRange(time, startTime, finishTime)) {
+        throw new ApiError(400, 'Requested time is outside the available timings.');
+    }
+
+    const appointments = await Appointment.find({
+        doctorId,
         date,
-        time:{
-            $gte:startTime,$lte:finishTime
+        time: {
+            $gte: startTime,
+            $lte: finishTime
         }
-    })   
-    console.log(appointments)
-    
-    if(appointments.length>0) {
-        res.status(201).send(
-            new ApiResponse(201,'Doctor is busy at this time.')
-        )
+    });
+
+    console.log(appointments);
+
+    if (appointments.length > 0) {
+        throw new ApiError(400, 'Doctor is not available at this time.');
+    } else {
+        res.status(200).send(new ApiResponse(200, 'Doctor is available at this time.'));
     }
-    else {
-        res.status(201).send(
-            new ApiResponse(201,'Doctor is available at this time.')
-        )
-    }
-})
+});
 
 export {
     loginController,

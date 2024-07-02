@@ -20,14 +20,11 @@ function BookingPage() {
     const params = useParams()
     const [singleDoctor, setSingleDoctor] = useState(null)
 
-    const handleAvailability = async () => {
+    const checkAvailability = async () => {
       try {
         const res = await axios.post('http://localhost:8080/api/v1/user/booking-availability',
           {
-            doctorId:params.doctorId,
-            date:date,
-            time:time,
-            doctorInfo: singleDoctor,
+            doctorId: params.doctorId, date, time
           },
           {
             headers: {
@@ -36,12 +33,12 @@ function BookingPage() {
           }
         )
 
-        if(res.data) {
-          message.success('Booking Done.')
+        if (res.data) {
+          message.success(res.data.message)
         }
-        
-      } catch(error) {
-        if(error.response.data.message) {
+
+      } catch (error) {
+        if (error.response.data.message) {
           message.error(error.response.data.message)
         } else {
           message.error('Booking Error.')
@@ -56,7 +53,7 @@ function BookingPage() {
             doctorId: params.doctorId,
             userId: user._id,
             doctorInfo: singleDoctor,
-            userInfo:user.data.username,
+            userInfo: user.data.username,
             date: date,
             time: time
           },
@@ -124,28 +121,35 @@ function BookingPage() {
                 type="date"
                 className="w-full sm:w-auto p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                 value={date}
-                onChange={(e) => setDate(e.target.value)}
+                onChange={(e) => {
+                  setDate(e.target.value)
+                }}
                 required
               />
                 <input
                   type="time"
                   className="w-full sm:w-auto p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                   value={time}
-                  onChange={(e) => setTime(e.target.value)}
+                  onChange={(e) => {
+                    setTime(e.target.value)
+                  }}
                   required
                 /> </div>
               <button
                 className="w-full sm:w-auto p-2 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                onClick={handleAvailability}
+                onClick={checkAvailability}
               >
                 Check Availability
               </button>
-              <button
-                className="w-full sm:w-auto p-2 bg-gray-800 text-white rounded hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-800"
-                onClick={handleBooking}
-              >
-                Book Now
-              </button>
+              {
+                isAvailable &&
+                <button
+                  className="w-full sm:w-auto p-2 bg-gray-800 text-white rounded hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-800"
+                  onClick={handleBooking}
+                >
+                  Book Now
+                </button>
+              }
             </div>
           </div>
 

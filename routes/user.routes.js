@@ -23,6 +23,6 @@ userRouter.post('/get-all-notifications',authmiddleware,getAllNotificationsContr
 userRouter.post('/delete-all-notifications',authmiddleware,deleteAllNotificationsController)
 userRouter.post('/getdoctor',authmiddleware,getDocController)
 userRouter.post('/book-appointment',authmiddleware,bookAppointmentController)
-userRouter.post('booking-availability',authmiddleware,bookingAvailabilityController)
+userRouter.post('/booking-availability',authmiddleware,bookingAvailabilityController)
 
 export {userRouter}
