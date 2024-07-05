@@ -34,10 +34,12 @@ function BookingPage() {
         )
 
         if (res.data) {
-          message.success(res.data.message)
+          setIsAvailable(true)
+          message.success('Doctor is available at this time.')
         }
 
       } catch (error) {
+        setIsAvailable(false)
         if (error.response.data.message) {
           message.error(error.response.data.message)
         } else {
@@ -107,15 +109,15 @@ function BookingPage() {
 
     return (
       <Layout>
+        <h1 className='text-center text-2xl font-bold'>Book an Appointment</h1>
         {singleDoctor && (
-          <div className="max-w-md mx-auto p-6 bg-white border border-gray-200 rounded-lg shadow-lg">
+          <div className="max-w-md mx-auto p-10 bg-white border border-gray-200 rounded-lg shadow-lg mt-10">
             <h4 className="text-lg font-semibold mb-2">
               Dr. {singleDoctor.firstName} {singleDoctor.lastName}
             </h4>
             <h4 className="text-gray-600 mb-2">Fees: ${singleDoctor.feesPerConsultation}</h4>
-            <h4 className="text-gray-600 mb-4">
-              Timings: {singleDoctor.timings}
-            </h4>
+            <h4 className="text-gray-600 mb-4">Timings: {singleDoctor.timings}</h4>
+            <h4 className="text-gray-600 mb-4">Specialization: {singleDoctor.specialization}</h4>
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-4 sm:space-y-0 sm:space-x-4">
               <div><input
                 type="date"

@@ -46,19 +46,28 @@ function HomePage() {
     return <Spinner />;
   }
 
-  return (
-    <Layout>
-      {user.isDoctor ? (
-        <div>HomePage</div>
-      ) : (
+  if(user?.isDoctor)
+  {
+    return (
+      <Layout>
+      <div>HomePage</div>
+      </Layout>
+    )
+  }
+
+  else {
+    return (
+        <Layout>
+        <h1 className='text-center font-bold text-2xl'>List of Doctors at Medicare</h1>
         <Row>
           {allDoctors.map(doctor => (
             <DoctorList key={doctor._id} doctor={doctor} />
           ))}
         </Row>
-      )}
-    </Layout>
-  );
+        </Layout>
+      )
+    }
+
 }
 
 export default HomePage;
