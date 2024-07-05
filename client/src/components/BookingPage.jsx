@@ -67,7 +67,6 @@ function BookingPage() {
         )
 
         if (res.data) {
-          console.log(res.data.data)
           message.success('Booking Appointment Successfull.')
         }
       } catch (error) {

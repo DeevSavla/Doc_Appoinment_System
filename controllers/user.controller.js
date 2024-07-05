@@ -215,7 +215,7 @@ const bookAppointmentController = asyncHandler(async(req,res)=>{
 })
 
 const bookingAvailabilityController = asyncHandler(async (req, res) => {
-    console.log(req.body);
+    
     const { doctorId, date, time } = req.body;
     const doctor = await Doctor.findOne({ _id: doctorId });
 
@@ -233,23 +233,21 @@ const bookingAvailabilityController = asyncHandler(async (req, res) => {
         throw new ApiError(400, 'Requested time is outside the available timings.');
     }
 
-    const appointments = await Appointment.find({
+    const appointment = await Appointment.findOne({
         doctorId,
         date,
-        time: {
-            $gte: startTime,
-            $lte: finishTime
-        }
+        time
     });
 
-    console.log(appointments);
+    console.log(appointment);
 
-    if (appointments.length > 0) {
+    if (appointment) {
         throw new ApiError(400, 'Doctor is not available at this time.');
     } else {
         res.status(200).send(new ApiResponse(200, 'Doctor is available at this time.'));
     }
 });
+
 
 export {
     loginController,
