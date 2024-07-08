@@ -42,6 +42,34 @@ function AppointmentPage() {
         getAppointments()
     }, [])
 
+    const handleStatus = async (record, status) => {
+        try {
+            const res = await axios.post('http://localhost:8080/api/v1/doctor/handle-status',
+                {
+                    appointmentId: record._id,
+                    status
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem('token')}`
+                    }
+                }
+            )
+
+            if (res.data) {
+                message.success('Appointment Status Updated.')
+                getAppointments()
+            }
+
+        } catch (error) {
+            if (error.response.data.message) {
+                message.error(error.response.data.message)
+            } else {
+                message.error('Appointment Status Error.')
+            }
+        }
+    }
+
     const columns = [
         {
             title: 'ID',
@@ -74,6 +102,31 @@ function AppointmentPage() {
             render: (text, record) => (
                 <span>{record.status}</span>
             )
+        },
+        {
+            title: 'Actions',
+            dataIndex: 'actions',
+            render: (text, record) => {
+                return (
+                    <div>
+                        {record.status === "Pending" ? (
+                            <div className='flex gap-4'>
+                                <button className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-500" onClick={() => handleStatus(record, 'Approve')}>Approve</button>
+                                <button className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-500" onClick={() => handleStatus(record, 'Reject')}>Reject</button>
+                            </div>
+                        ) : record.status === "Approve" ? (
+                            <div className='flex gap-4'>
+                                <button className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-500" onClick={() => handleStatus(record, 'Reject')}>Reject</button>
+                            </div>
+                        ) : record.status === "Reject" ? (
+                            <div className='flex gap-4'>
+                                <button className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-500" onClick={() => handleStatus(record, 'Approve')}>Approve</button>
+                            </div>
+                        ) : null}
+
+                    </div>
+                )
+            }
         }
     ]
 

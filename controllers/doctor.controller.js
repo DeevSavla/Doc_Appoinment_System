@@ -3,6 +3,7 @@ import { ApiError } from '../utility/ApiError.js'
 import { ApiResponse } from '../utility/ApiResponse.js'
 import { Doctor } from '../models/doctor.model.js'
 import {Appointment} from '../models/appointment.model.js'
+import {User} from '../models/user.model.js'
 
 const getDoctorInfoController = asyncHandler(async (req, res) => {
     const doctor = await Doctor.findOne({ userId: req.body.userId })
@@ -55,9 +56,41 @@ const getAllAppointmentsController = asyncHandler(async (req,res)=>{
     )
 })
 
+const handleStatusController = asyncHandler(async (req,res)=>{
+
+    const {appointmentId , status} = req.body
+    console.log(appointmentId)
+
+    const appointments = await Appointment.findByIdAndUpdate(appointmentId,{status})
+
+    if(!appointments) {
+        throw new ApiError(404,'No appointment found')
+    }
+
+    const user = await User.findById({_id:appointments.userId})
+
+    if(!user) {
+        throw new ApiError(404,'User Not Found.')
+    }
+
+    const notifications = user.notifications
+
+    notifications.push({
+        type:"status-update",
+        message:`Your appointment has been ${status}`
+    })
+
+    await user.save()
+
+    res.status(201).send(
+        new ApiResponse(201,'Appointment Status Updated.')
+    )
+})
+
 export {
     getDoctorInfoController,
     updateDoctorProfileController,
     getSingleDoctorController,
-    getAllAppointmentsController
+    getAllAppointmentsController,
+    handleStatusController
 }
