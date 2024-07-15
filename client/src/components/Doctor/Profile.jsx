@@ -27,7 +27,7 @@ function Profile() {
     const handleSubmit = async (values) => {
       try {
         dispatch(showloading())
-        const res = await axios.post('http://localhost:8080/api/v1/doctor/update-doctor-profile', 
+        const res = await axios.post('/api/v1/doctor/update-doctor-profile', 
           { ...values, userId: user._id }, 
           {
           headers: {

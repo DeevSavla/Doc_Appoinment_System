@@ -10,7 +10,7 @@ function Doctors() {
 
   const getDoctors = async () =>{
     try {
-      const res = await axios.get('http://localhost:8080/api/v1/admin/get-all-doctors',
+      const res = await axios.get('/api/v1/admin/get-all-doctors',
         {
           headers:{
             Authorization:`Bearer ${localStorage.getItem('token')}`

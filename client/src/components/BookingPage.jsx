@@ -50,7 +50,7 @@ function BookingPage() {
 
     const handleBooking = async () => {
       try {
-        const res = await axios.post('http://localhost:8080/api/v1/user/book-appointment',
+        const res = await axios.post('/api/v1/user/book-appointment',
           {
             doctorId: params.doctorId,
             userId: user._id,
