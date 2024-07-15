@@ -3,7 +3,7 @@ import { Form, Input, message } from 'antd'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { useDispatch } from 'react-redux'
-import { showloading,hideloading } from '../store/features/alertSlice'
+import { showloading, hideloading } from '../store/features/alertSlice'
 
 function Login() {
 
@@ -37,20 +37,21 @@ function Login() {
   }
 
   return (
-      <Form className="w-1/3 mx-auto bg-white shadow-md rounded-lg p-6 my-36" onFinish={handleSubmit}>
-    <h1 className="text-center text-2xl mb-5 text-blue-600">Login Form</h1>
-    <Form.Item label="Email" name="email">
-      <Input type="email" required />
-    </Form.Item>
-    <Form.Item label="Password" name="password">
-      <Input type="password" required />
-    </Form.Item>
-    <div className="flex justify-between">
-      <Link to="/register" className="text-blue-600 hover:text-blue-800">Not registered?</Link>
-      <Link to="/changepass" className="text-blue-600 hover:text-blue-800">Forgot Password?</Link>
-      <button className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-500">Login</button>
-    </div>
-  </Form>
+    <Form className="w-full max-w-md mx-auto bg-white shadow-md rounded-lg p-6 my-12 sm:my-24 md:my-36" onFinish={handleSubmit}>
+      <h1 className="text-center text-2xl mb-5 text-blue-600">Login Form</h1>
+      <Form.Item label="Email" name="email" className="w-full">
+        <Input type="email" required className="w-full" />
+      </Form.Item>
+      <Form.Item label="Password" name="password" className="w-full">
+        <Input type="password" required className="w-full" />
+      </Form.Item>
+      <div className="flex flex-col sm:flex-row justify-between items-center mt-4">
+        <Link to="/register" className="text-blue-600 hover:text-blue-800 mb-2 sm:mb-0">Not registered?</Link>
+        <Link to="/changepass" className="text-blue-600 hover:text-blue-800 mb-2 sm:mb-0">Forgot Password?</Link>
+        <button className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-500 mt-2 sm:mt-0">Login</button>
+      </div>
+    </Form>
+
   )
 }
 
