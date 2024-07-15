@@ -21,7 +21,7 @@ function ApplyDoctor() {
         const handleSubmit = async (values) => {
             try {
                 dispatch(showloading())
-                const res = await axios.post('http://localhost:8080/api/v1/user/apply-doctor', { ...values, userId: user._id }, {
+                const res = await axios.post('/api/v1/user/apply-doctor', { ...values, userId: user._id }, {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem('token')}`
                     }

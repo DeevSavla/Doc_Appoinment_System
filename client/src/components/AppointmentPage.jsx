@@ -11,7 +11,7 @@ function AppointmentPage() {
 
     const getAppointments = async (req, res) => {
         try {
-            const res = await axios.post('http://localhost:8080/api/v1/doctor/get-all-appointments',
+            const res = await axios.post('/api/v1/doctor/get-all-appointments',
                 {
                     doctorId: params.doctorId
                 },
@@ -44,7 +44,7 @@ function AppointmentPage() {
 
     const handleStatus = async (record, status) => {
         try {
-            const res = await axios.post('http://localhost:8080/api/v1/doctor/handle-status',
+            const res = await axios.post('/api/v1/doctor/handle-status',
                 {
                     appointmentId: record._id,
                     status

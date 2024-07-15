@@ -13,7 +13,7 @@ function Changepassword() {
     const handleSubmit = async (values) => {
         try {
             dispatch(showloading())
-            const res = await axios.post('http://localhost:8080/api/v1/user/changepassword', values)
+            const res = await axios.post('/api/v1/user/changepassword', values)
             dispatch(hideloading())
             message.success('Password Changed.')
             navigate('/login')

@@ -35,7 +35,7 @@ function Doctors() {
 
   const handleAccountStatus = async(record,status) =>{
     try{
-      const res = await axios.post('http://localhost:8080/api/v1/admin/changeAccountStatus',
+      const res = await axios.post('/api/v1/admin/changeAccountStatus',
         {
           doctorId:record._id,
           userId : record.userId,

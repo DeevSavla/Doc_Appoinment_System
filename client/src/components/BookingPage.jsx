@@ -22,7 +22,7 @@ function BookingPage() {
 
     const checkAvailability = async () => {
       try {
-        const res = await axios.post('http://localhost:8080/api/v1/user/booking-availability',
+        const res = await axios.post('/api/v1/user/booking-availability',
           {
             doctorId: params.doctorId, date, time
           },

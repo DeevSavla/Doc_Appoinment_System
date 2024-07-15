@@ -17,7 +17,7 @@ function HomePage() {
       const getAllDoctorInfo = async () => {
         try {
           const res = await axios.post(
-            'http://localhost:8080/api/v1/user/getdoctor',
+            '/api/v1/user/getdoctor',
             {},
             {
               headers: {

@@ -13,7 +13,7 @@ function Login() {
   const handleSubmit = async (values) => {
     try {
       dispatch(showloading())
-      const res = await axios.post('http://localhost:8080/api/v1/user/login', values)
+      const res = await axios.post('/api/v1/user/login', values)
       dispatch(hideloading())
       if (res.data) {
         const { token } = res.data.data

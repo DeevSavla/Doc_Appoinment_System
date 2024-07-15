@@ -20,7 +20,7 @@ function NotificationPage() {
       try {
         dispatch(showloading());
         const res = await axios.post(
-          "http://localhost:8080/api/v1/user/get-all-notifications",
+          "/api/v1/user/get-all-notifications",
           {
             userId: user.data._id,
           },
@@ -51,7 +51,7 @@ function NotificationPage() {
       try {
         dispatch(showloading());
         const res = await axios.post(
-          "http://localhost:8080/api/v1/user/delete-all-notifications",
+          "/api/v1/user/delete-all-notifications",
           { userId: user.data._id },
           {
             headers: {

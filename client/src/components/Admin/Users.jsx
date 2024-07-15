@@ -11,7 +11,7 @@ function Users() {
 
   const getUsers = async () =>{
     try {
-      const res = await axios.get('http://localhost:8080/api/v1/admin/get-all-users',
+      const res = await axios.get('/api/v1/admin/get-all-users',
         {
           headers:{
             Authorization:`Bearer ${localStorage.getItem('token')}`

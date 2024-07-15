@@ -58,7 +58,7 @@ function Profile() {
 
     const getDoctorInfo = async (req,res) => {
       try {
-        const res = await axios.post('http://localhost:8080/api/v1/doctor/get-doctor-info',
+        const res = await axios.post('/api/v1/doctor/get-doctor-info',
           {
             userId: params.id
           },
