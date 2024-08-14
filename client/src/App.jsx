@@ -24,11 +24,11 @@ function App() {
       {loading ? (<Spinner />) : (
         <Routes>
           <Route path='/' element={<MainLayout><MainPage/></MainLayout>} />
-          <Route path='/apply-doctor' element={<ProtectedRoute><ApplyDoctor/></ProtectedRoute>}/>
-          <Route path='/homepage' element={<ProtectedRoute><HomePage /></ProtectedRoute>} />
           <Route path='/login' element={<PublicRoute><MainLayout><Login /></MainLayout></PublicRoute>} />
           <Route path='/register' element={<PublicRoute><MainLayout><Register /></MainLayout></PublicRoute>} />
           <Route path='/changepass' element={<PublicRoute><MainLayout><Changepassword /></MainLayout></PublicRoute> } />
+          <Route path='/apply-doctor' element={<ProtectedRoute><ApplyDoctor/></ProtectedRoute>}/>
+          <Route path='/homepage' element={<ProtectedRoute><HomePage /></ProtectedRoute>} />
           <Route path='/notificationpage' element={<ProtectedRoute><NotificationPage/></ProtectedRoute>} />
           <Route path='/admin/users' element={<ProtectedRoute><Users/></ProtectedRoute>}/>
           <Route path='/admin/doctors' element={<ProtectedRoute><Doctors/></ProtectedRoute>}/>
