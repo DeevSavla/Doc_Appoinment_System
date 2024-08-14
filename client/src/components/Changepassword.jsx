@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { useDispatch } from 'react-redux'
 import { showloading,hideloading } from '../store/features/alertSlice'
+import {baseUrl} from '../utilities/baseUrl'
 
 function Changepassword() {
 
@@ -13,7 +14,7 @@ function Changepassword() {
     const handleSubmit = async (values) => {
         try {
             dispatch(showloading())
-            const res = await axios.post('/api/v1/user/changepassword', values)
+            const res = await axios.post(`${baseUrl}/user/changepassword`, values)
             dispatch(hideloading())
             message.success('Password Changed.')
             navigate('/login')

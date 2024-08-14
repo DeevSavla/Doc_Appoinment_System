@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { showloading, hideloading } from '../store/features/alertSlice'
 import axios from 'axios'
+import {baseUrl} from '../utilities/baseUrl'
 
 function ApplyDoctor() {
 
@@ -21,7 +22,7 @@ function ApplyDoctor() {
         const handleSubmit = async (values) => {
             try {
                 dispatch(showloading())
-                const res = await axios.post('/api/v1/user/apply-doctor', { ...values, userId: user._id }, {
+                const res = await axios.post(`${baseUrl}/user/apply-doctor`, { ...values, userId: user._id }, {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem('token')}`
                     }

@@ -2,7 +2,7 @@ import React,{useEffect, useState} from 'react'
 import Layout from '../Layout'
 import axios from 'axios'
 import { Table, message } from 'antd'
-
+import {baseUrl} from '../../utilities/baseUrl'
 
 function Users() {
 
@@ -11,7 +11,7 @@ function Users() {
 
   const getUsers = async () =>{
     try {
-      const res = await axios.get('/api/v1/admin/get-all-users',
+      const res = await axios.get(`${baseUrl}/admin/get-all-users`,
         {
           headers:{
             Authorization:`Bearer ${localStorage.getItem('token')}`

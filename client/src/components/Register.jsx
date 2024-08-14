@@ -5,6 +5,7 @@ import axios from 'axios'
 import { useDispatch } from 'react-redux'
 import { showloading, hideloading } from '../store/features/alertSlice'
 import signupImage from '../photos/signup.gif'
+import {baseUrl} from '../utilities/baseUrl'
 
 function Register() {
 
@@ -15,7 +16,7 @@ function Register() {
     try {
       localStorage.clear()
       dispatch(showloading())
-      const res = await axios.post('/api/v1/user/register', values)
+      const res = await axios.post(`${baseUrl}/user/register`, values)
       dispatch(hideloading())
       if (res.data) {
         message.success('Registered Successfully');

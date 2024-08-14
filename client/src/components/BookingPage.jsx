@@ -4,6 +4,7 @@ import axios from 'axios'
 import { useParams } from 'react-router-dom'
 import { message } from 'antd'
 import { useSelector } from 'react-redux'
+import {baseUrl} from '../utilities/baseUrl'
 
 function BookingPage() {
 
@@ -22,7 +23,7 @@ function BookingPage() {
 
     const checkAvailability = async () => {
       try {
-        const res = await axios.post('/api/v1/user/booking-availability',
+        const res = await axios.post(`${baseUrl}/user/booking-availability`,
           {
             doctorId: params.doctorId, date, time
           },
@@ -50,7 +51,7 @@ function BookingPage() {
 
     const handleBooking = async () => {
       try {
-        const res = await axios.post('/api/v1/user/book-appointment',
+        const res = await axios.post(`${baseUrl}/user/book-appointment`,
           {
             doctorId: params.doctorId,
             userId: user._id,
@@ -80,7 +81,7 @@ function BookingPage() {
 
     const getDoctor = async (req, res) => {
       try {
-        const res = await axios.post('http://localhost:8080/api/v1/doctor/get-single-doctor',
+        const res = await axios.post(`${baseUrl}/doctor/get-single-doctor`,
           { doctorId: params.doctorId },
           {
             headers: {

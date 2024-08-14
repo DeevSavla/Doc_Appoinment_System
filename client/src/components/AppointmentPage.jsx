@@ -3,6 +3,7 @@ import axios from 'axios'
 import Layout from './Layout'
 import { message, Table } from 'antd'
 import { useParams } from 'react-router-dom'
+import {baseUrl} from '../utilities/baseUrl'
 
 function AppointmentPage() {
 
@@ -11,7 +12,7 @@ function AppointmentPage() {
 
     const getAppointments = async (req, res) => {
         try {
-            const res = await axios.post('/api/v1/doctor/get-all-appointments',
+            const res = await axios.post(`${baseUrl}/doctor/get-all-appointments`,
                 {
                     doctorId: params.doctorId
                 },
@@ -44,7 +45,7 @@ function AppointmentPage() {
 
     const handleStatus = async (record, status) => {
         try {
-            const res = await axios.post('/api/v1/doctor/handle-status',
+            const res = await axios.post(`${baseUrl}/doctor/handle-status`,
                 {
                     appointmentId: record._id,
                     status

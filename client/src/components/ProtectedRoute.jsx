@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { showloading, hideloading } from '../store/features/alertSlice'
 import axios from 'axios'
 import { setUser} from '../store/features/userSlice'
+import {baseUrl} from '../utilities/baseUrl'
 
 function ProtectedRoute({ children }) {
 
@@ -13,7 +14,7 @@ function ProtectedRoute({ children }) {
     const getData = async () => {
       try {
         dispatch(showloading())
-        const res = await axios.post('http://localhost:8080/api/v1/user/getUserData', {
+        const res = await axios.post(`${baseUrl}/user/getUserData`, {
           token: localStorage.getItem('token')
         }, {
           headers: {

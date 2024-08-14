@@ -7,7 +7,7 @@ import { Form, Col, Row, Input, message } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { showloading, hideloading } from '../../store/features/alertSlice'
-
+import {baseUrl} from '../../utilities/baseUrl'
 
 function Profile() {
 
@@ -27,7 +27,7 @@ function Profile() {
     const handleSubmit = async (values) => {
       try {
         dispatch(showloading())
-        const res = await axios.post('/api/v1/doctor/update-doctor-profile', 
+        const res = await axios.post(`${baseUrl}/doctor/update-doctor-profile`, 
           { ...values, userId: user._id }, 
           {
           headers: {
@@ -58,7 +58,7 @@ function Profile() {
 
     const getDoctorInfo = async (req,res) => {
       try {
-        const res = await axios.post('/api/v1/doctor/get-doctor-info',
+        const res = await axios.post(`${baseUrl}/doctor/get-doctor-info`,
           {
             userId: params.id
           },

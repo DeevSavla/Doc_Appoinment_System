@@ -5,6 +5,7 @@ import Spinner from './Spinner';
 import axios from 'axios';
 import { message, Row } from 'antd';
 import DoctorList from './DoctorList';
+import {baseUrl} from '../utilities/baseUrl'
 
 function HomePage() {
   const { user } = useSelector(state => state.user);
@@ -17,7 +18,7 @@ function HomePage() {
       const getAllDoctorInfo = async () => {
         try {
           const res = await axios.post(
-            '/api/v1/user/getdoctor',
+            `${baseUrl}/user/getdoctor`,
             {},
             {
               headers: {

@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { useDispatch } from 'react-redux'
 import { showloading, hideloading } from '../store/features/alertSlice'
+import {baseUrl} from '../utilities/baseUrl'
 
 function Login() {
 
@@ -13,7 +14,7 @@ function Login() {
   const handleSubmit = async (values) => {
     try {
       dispatch(showloading())
-      const res = await axios.post('/api/v1/user/login', values)
+      const res = await axios.post(`${baseUrl}/user/login`, values)
       dispatch(hideloading())
       if (res.data) {
         const { token } = res.data.data

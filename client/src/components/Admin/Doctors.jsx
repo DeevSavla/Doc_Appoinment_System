@@ -2,6 +2,7 @@ import React,{useEffect, useState} from 'react'
 import Layout from '../Layout'
 import axios from 'axios'
 import { Table, message } from 'antd'
+import {baseUrl} from '../../utilities/baseUrl'
 
 function Doctors() {
 
@@ -10,7 +11,7 @@ function Doctors() {
 
   const getDoctors = async () =>{
     try {
-      const res = await axios.get('/api/v1/admin/get-all-doctors',
+      const res = await axios.get(`${baseUrl}/admin/get-all-doctors`,
         {
           headers:{
             Authorization:`Bearer ${localStorage.getItem('token')}`
@@ -35,7 +36,7 @@ function Doctors() {
 
   const handleAccountStatus = async(record,status) =>{
     try{
-      const res = await axios.post('/api/v1/admin/changeAccountStatus',
+      const res = await axios.post(`${baseUrl}/admin/changeAccountStatus`,
         {
           doctorId:record._id,
           userId : record.userId,

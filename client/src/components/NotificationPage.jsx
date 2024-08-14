@@ -7,6 +7,7 @@ import axios from 'axios';
 import Spinner from './Spinner';
 import { hideloading, showloading } from '../store/features/alertSlice';
 import { setUser } from '../store/features/userSlice';
+import {baseUrl} from '../utilities/baseUrl'
 
 function NotificationPage() {
   const { user } = useSelector(state => state.user);
@@ -20,7 +21,7 @@ function NotificationPage() {
       try {
         dispatch(showloading());
         const res = await axios.post(
-          "/api/v1/user/get-all-notifications",
+         `${baseUrl}/user/get-all-notifications`,
           {
             userId: user.data._id,
           },
@@ -51,7 +52,7 @@ function NotificationPage() {
       try {
         dispatch(showloading());
         const res = await axios.post(
-          "/api/v1/user/delete-all-notifications",
+          `${baseUrl}/user/delete-all-notifications`,
           { userId: user.data._id },
           {
             headers: {
