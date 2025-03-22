@@ -16,6 +16,8 @@ import Doctors from './components/Admin/Doctors'
 import Profile from './components/Doctor/Profile'
 import BookingPage from './components/BookingPage'
 import AppointmentPage from './components/AppointmentPage'
+import Services from './components/Services'
+import Contact from './components/Contact'
 
 function App() {
   const { loading } = useSelector(state => state.alerts)
@@ -24,6 +26,8 @@ function App() {
       {loading ? (<Spinner />) : (
         <Routes>
           <Route path='/' element={<MainLayout><MainPage/></MainLayout>} />
+          <Route path='/services' element={<MainLayout><Services/></MainLayout>} />
+          <Route path='/contact' element={<MainLayout><Contact/></MainLayout>} />
           <Route path='/login' element={<PublicRoute><MainLayout><Login /></MainLayout></PublicRoute>} />
           <Route path='/register' element={<PublicRoute><MainLayout><Register /></MainLayout></PublicRoute>} />
           <Route path='/changepass' element={<PublicRoute><MainLayout><Changepassword /></MainLayout></PublicRoute> } />
