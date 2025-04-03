@@ -8,102 +8,120 @@ function MainPage() {
   const navigate = useNavigate()
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Hero Section */}
-      <div className="relative bg-white overflow-hidden">
-        <div className="max-w-7xl mx-auto">
-          <div className="relative z-10 pb-8 bg-white sm:pb-16 md:pb-20 lg:max-w-2xl lg:w-full lg:pb-28 xl:pb-32">
-            <main className="mt-10 mx-auto max-w-7xl px-4 sm:mt-12 sm:px-6 lg:mt-16 lg:px-8 xl:mt-28">
-              <div className="sm:text-center lg:text-left">
-                <h1 className="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
-                  <span className="block">Your Health Is Our</span>
-                  <span className="block text-blue-600">Top Priority</span>
-                </h1>
-                <p className="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
-                  Get connected with the best medical professionals and receive quality healthcare services from the comfort of your home.
-                </p>
-                <div className="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
-                  <div className="rounded-md shadow">
-                    <button
-                      onClick={() => navigate('/login')}
-                      className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 md:py-4 md:text-lg md:px-10"
-                    >
-                      Get Started
-                    </button>
-                  </div>
-                  <div className="mt-3 sm:mt-0 sm:ml-3">
-                    <button
-                      onClick={() => navigate('/register')}
-                      className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-blue-700 bg-blue-100 hover:bg-blue-200 md:py-4 md:text-lg md:px-10"
-                    >
-                      Sign Up
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </main>
-          </div>
-        </div>
-        <div className="lg:absolute lg:inset-y-0 lg:right-0 lg:w-3/5 flex items-center justify-center">
-          <div className="relative h-64 sm:h-72 md:h-96 lg:h-full w-full">
-            <img
-              className="absolute inset-0 w-full h-full object-contain"
-              src={hero1}
-              alt="Doctor caring for patient"
-            />
-          </div>
-        </div>
+    <div className="min-h-screen bg-white">
+      {/* Hero Section with Animation */}
+      <div className="relative bg-gradient-to-r from-blue-50 to-teal-50 overflow-hidden flex items-center">
+  <div className="relative z-10 py-10 sm:py-12 md:py-14 lg:w-full px-8 sm:px-16 lg:px-24">
+    <svg
+      className="hidden lg:block absolute right-0 inset-y-0 h-full w-48 text-white transform translate-x-1/2"
+      fill="currentColor"
+      viewBox="0 0 100 100"
+      preserveAspectRatio="none"
+      aria-hidden="true"
+    >
+      <polygon points="50,0 100,0 50,100 0,100" />
+    </svg>
 
+    <main className="mt-6 max-w-7xl mx-auto sm:mt-8 lg:mt-10 xl:mt-14">
+      <div className="text-center lg:text-left">
+        <h1 className="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
+          <span className="block">Your Health Is Our</span>
+          <span className="block text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-teal-500">
+            Top Priority
+          </span>
+        </h1>
+        <p className="mt-2 text-base text-gray-500 sm:mt-3 sm:text-lg md:mt-3 md:text-xl">
+          Get connected with the best medical professionals and receive quality healthcare services from the comfort of your home.
+        </p>
+        <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row sm:justify-center lg:justify-start gap-4">
+          <button
+            onClick={() => navigate('/login')}
+            className="w-full sm:w-auto flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-gradient-to-r from-blue-600 to-teal-500 hover:from-blue-700 hover:to-teal-600 shadow-md md:py-4 md:text-lg md:px-10 transition-all duration-200"
+          >
+            <i className="fas fa-sign-in-alt mr-2"></i>
+            Get Started
+          </button>
+          <button
+            onClick={() => navigate('/register')}
+            className="w-full sm:w-auto flex items-center justify-center px-8 py-3 border border-blue-600 text-base font-medium rounded-md text-blue-700 bg-white hover:bg-blue-50 md:py-4 md:text-lg md:px-10 transition-all duration-200"
+          >
+            <i className="fas fa-user-plus mr-2"></i>
+            Sign Up
+          </button>
+        </div>
       </div>
+    </main>
+  </div>
+</div>
 
-      {/* Features Section */}
-      <div className="py-12 bg-white">
+
+
+      {/* Features Section with Cards */}
+      <div className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="lg:text-center">
-            <h2 className="text-base text-blue-600 font-semibold tracking-wide uppercase">Our Services</h2>
-            <p className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
-              A better way to receive medical care
-            </p>
+            <p className="text-base text-blue-600 font-semibold tracking-wide uppercase">Our Services</p>
+            <h2 className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+              Quality Healthcare Made Simple
+            </h2>
             <p className="mt-4 max-w-2xl text-xl text-gray-500 lg:mx-auto">
               Choose from our wide range of medical services and experienced doctors
             </p>
           </div>
 
-          <div className="mt-10">
-            <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-3">
-              <div className="relative bg-white p-6 rounded-lg shadow-lg">
-                <div className="text-center">
-                  <div className="flex items-center justify-center h-12 w-12 rounded-md bg-blue-500 text-white mx-auto">
+          <div className="mt-16">
+            <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+              <div className="bg-white overflow-hidden shadow-xl rounded-xl hover:shadow-2xl transition-all duration-300">
+                <div className="p-6">
+                  <div className="w-12 h-12 rounded-md bg-gradient-to-r from-blue-600 to-teal-500 text-white flex items-center justify-center mb-5">
                     <i className="fas fa-user-md text-xl"></i>
                   </div>
-                  <h3 className="mt-4 text-lg font-medium text-gray-900">Expert Doctors</h3>
-                  <p className="mt-2 text-base text-gray-500">
-                    Connect with experienced and qualified medical professionals
+                  <h3 className="text-xl font-bold text-gray-900 mb-3">Expert Doctors</h3>
+                  <p className="text-gray-600">
+                    Connect with experienced and qualified medical professionals in various specialties
                   </p>
+                  <div className="mt-4">
+                    <a href="#" className="text-blue-600 hover:text-blue-800 font-medium flex items-center">
+                      Learn more
+                      <i className="fas fa-arrow-right ml-2 text-sm"></i>
+                    </a>
+                  </div>
                 </div>
               </div>
 
-              <div className="relative bg-white p-6 rounded-lg shadow-lg">
-                <div className="text-center">
-                  <div className="flex items-center justify-center h-12 w-12 rounded-md bg-blue-500 text-white mx-auto">
+              <div className="bg-white overflow-hidden shadow-xl rounded-xl hover:shadow-2xl transition-all duration-300">
+                <div className="p-6">
+                  <div className="w-12 h-12 rounded-md bg-gradient-to-r from-blue-600 to-teal-500 text-white flex items-center justify-center mb-5">
                     <i className="fas fa-calendar-check text-xl"></i>
                   </div>
-                  <h3 className="mt-4 text-lg font-medium text-gray-900">Easy Appointments</h3>
-                  <p className="mt-2 text-base text-gray-500">
-                    Book appointments with just a few clicks
+                  <h3 className="text-xl font-bold text-gray-900 mb-3">Easy Appointments</h3>
+                  <p className="text-gray-600">
+                    Book appointments online with just a few clicks and manage your schedule easily
                   </p>
+                  <div className="mt-4">
+                    <a href="#" className="text-blue-600 hover:text-blue-800 font-medium flex items-center">
+                      Learn more
+                      <i className="fas fa-arrow-right ml-2 text-sm"></i>
+                    </a>
+                  </div>
                 </div>
               </div>
 
-              <div className="relative bg-white p-6 rounded-lg shadow-lg">
-                <div className="text-center">
-                  <div className="flex items-center justify-center h-12 w-12 rounded-md bg-blue-500 text-white mx-auto">
+              <div className="bg-white overflow-hidden shadow-xl rounded-xl hover:shadow-2xl transition-all duration-300">
+                <div className="p-6">
+                  <div className="w-12 h-12 rounded-md bg-gradient-to-r from-blue-600 to-teal-500 text-white flex items-center justify-center mb-5">
                     <i className="fas fa-clock text-xl"></i>
                   </div>
-                  <h3 className="mt-4 text-lg font-medium text-gray-900">24/7 Support</h3>
-                  <p className="mt-2 text-base text-gray-500">
-                    Round-the-clock medical assistance and support
+                  <h3 className="text-xl font-bold text-gray-900 mb-3">24/7 Support</h3>
+                  <p className="text-gray-600">
+                    Round-the-clock medical assistance and support whenever you need it
                   </p>
+                  <div className="mt-4">
+                    <a href="#" className="text-blue-600 hover:text-blue-800 font-medium flex items-center">
+                      Learn more
+                      <i className="fas fa-arrow-right ml-2 text-sm"></i>
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>
@@ -111,26 +129,33 @@ function MainPage() {
         </div>
       </div>
 
-      {/* Statistics Section */}
-      <div className="bg-blue-50 py-12">
+
+      {/* CTA Section */}
+      <div className="bg-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 gap-5 sm:grid-cols-3 lg:grid-cols-3">
-            <div className="bg-white overflow-hidden shadow rounded-lg">
-              <div className="px-4 py-5 sm:p-6 text-center">
-                <dt className="text-4xl font-extrabold text-blue-600">30+</dt>
-                <dd className="mt-1 text-gray-900 text-sm">Years of Experience</dd>
-              </div>
-            </div>
-            <div className="bg-white overflow-hidden shadow rounded-lg">
-              <div className="px-4 py-5 sm:p-6 text-center">
-                <dt className="text-4xl font-extrabold text-blue-600">15+</dt>
-                <dd className="mt-1 text-gray-900 text-sm">Clinic Locations</dd>
-              </div>
-            </div>
-            <div className="bg-white overflow-hidden shadow rounded-lg">
-              <div className="px-4 py-5 sm:p-6 text-center">
-                <dt className="text-4xl font-extrabold text-blue-600">100%</dt>
-                <dd className="mt-1 text-gray-900 text-sm">Patient Satisfaction</dd>
+          <div className="bg-gradient-to-r from-blue-600 to-teal-500 rounded-2xl shadow-xl overflow-hidden">
+            <div className="px-6 py-12 md:py-16 md:px-12 lg:px-16 lg:py-20 text-center text-white">
+              <h2 className="text-3xl font-extrabold tracking-tight md:text-4xl">
+                Ready to prioritize your health?
+              </h2>
+              <p className="mt-4 text-lg">
+                Join thousands of satisfied patients who trust MediCare for their healthcare needs.
+              </p>
+              <div className="mt-8 flex justify-center gap-4">
+                <button
+                  onClick={() => navigate('/register')}
+                  className="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-blue-700 bg-white hover:bg-blue-50 md:text-lg transition-all duration-200"
+                >
+                  <i className="fas fa-user-plus mr-2"></i>
+                  Create Account
+                </button>
+                <button
+                  onClick={() => navigate('/contact')}
+                  className="inline-flex items-center justify-center px-5 py-3 border border-white text-base font-medium rounded-md text-white hover:bg-white/10 md:text-lg transition-all duration-200"
+                >
+                  <i className="fas fa-phone-alt mr-2"></i>
+                  Contact Us
+                </button>
               </div>
             </div>
           </div>

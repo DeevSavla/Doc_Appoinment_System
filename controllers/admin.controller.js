@@ -1,5 +1,6 @@
 import { Doctor } from '../models/doctor.model.js'
 import { User } from '../models/user.model.js'
+import { Appointment } from '../models/appointment.model.js'
 import { ApiError } from '../utility/ApiError.js'
 import { ApiResponse } from '../utility/ApiResponse.js'
 import { asyncHandler } from '../utility/AsyncHandler.js'
@@ -58,8 +59,44 @@ const changeAccountStatusController = asyncHandler(async (req, res) => {
 
 })
 
+const getUsersCountController = asyncHandler(async (req, res) => {
+    const count = await User.countDocuments({});
+    res.status(200).send({
+        success: true,
+        count
+    });
+});
+
+const getDoctorsCountController = asyncHandler(async (req, res) => {
+    const count = await Doctor.countDocuments({});
+    res.status(200).send({
+        success: true,
+        count
+    });
+});
+
+const getPendingDoctorsCountController = asyncHandler(async (req, res) => {
+    const count = await Doctor.countDocuments({ status: 'Pending' });
+    res.status(200).send({
+        success: true,
+        count
+    });
+});
+
+const getAppointmentsCountController = asyncHandler(async (req, res) => {
+    const count = await Appointment.countDocuments({});
+    res.status(200).send({
+        success: true,
+        count
+    });
+});
+
 export {
     getAllUsersController,
     getAllDoctorsController,
     changeAccountStatusController,
+    getUsersCountController,
+    getDoctorsCountController,
+    getPendingDoctorsCountController,
+    getAppointmentsCountController
 }

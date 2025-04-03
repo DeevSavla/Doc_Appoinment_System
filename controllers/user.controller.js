@@ -26,17 +26,21 @@ const loginController = asyncHandler(async (req, res) => {
         throw new ApiError(403, 'Password Incorrect')
     }
 
-    const loggedInUser = await User.find({ email }).select("-password")
+    const loggedInUser = await User.findById(isUser._id).select("-password")
 
     const token = jwt.sign({ id: isUser._id }, process.env.JWT_SECRET, { expiresIn: '1d' })
 
-    const sendUser = {
-        loggedInUser,
-        token,
+    const data = {
+        username: loggedInUser.username,
+        email: loggedInUser.email,
+        _id: loggedInUser._id,
+        isAdmin: loggedInUser.isAdmin,
+        isDoctor: loggedInUser.isDoctor,
+        token: token
     }
 
-    return res.status(201).json(
-        new ApiResponse(200, sendUser, 'Login Success')
+    return res.status(200).json(
+        new ApiResponse(200, data, 'Login Success')
     )
 })
 
@@ -69,9 +73,15 @@ const registerController = asyncHandler(async (req, res) => {
     if (!sendUser) {
         throw new ApiError(500, 'Something went wrong while registering user.')
     }
+    
+    const data = {
+        username: sendUser.username,
+        email: sendUser.email,
+        _id: sendUser._id
+    }
 
     return res.status(201).json(
-        new ApiResponse(200, sendUser, 'User registered successfully.')
+        new ApiResponse(200, data, 'User registered successfully.')
     )
 })
 
@@ -148,40 +158,76 @@ const applyDoctorController = asyncHandler(async (req,res)=>{
 }
 )
 
-const getAllNotificationsController = asyncHandler(async(req,res)=>{
+// Fetch all notifications
+const getAllNotificationsController = asyncHandler(async(req,res) => {
+    try {
+        const user = await User.findOne({ _id: req.body.userId });
+        
+        if (!user) {
+            throw new ApiError(404, 'User not found');
+        }
+        
+        const userData = user.toObject ? user.toObject() : user;
+        
+        return res.status(200).json(
+            new ApiResponse(200, {data: userData}, 'Notifications fetched successfully')
+        );
+    } catch (error) {
+        console.error("Notification fetch error:", error);
+        throw new ApiError(500, 'Error fetching notifications');
+    }
+});
 
-    const admin = await User.findOne({ _id: req.body.userId })
-
-    const {notifications,seennotifications} = admin
-
-    seennotifications.push(...notifications)
-
-    admin.notifications = []
-
-    const updateAdmin = await admin.save()
-
-    updateAdmin.password = undefined
-
-    res.status(200).send(
-        new ApiResponse(200,updateAdmin,'All Notifications are read.')
-    )
-})
+// Mark all notifications as read
+const markAllNotificationsReadController = asyncHandler(async(req,res) => {
+    try {
+        const user = await User.findOne({ _id: req.body.userId });
+        
+        if (!user) {
+            throw new ApiError(404, 'User not found');
+        }
+        
+        // Move all notifications to seen
+        const { notifications } = user;
+        user.seennotifications.push(...notifications);
+        user.notifications = [];
+        
+        await user.save();
+        
+        const userData = user.toObject ? user.toObject() : user;
+        
+        return res.status(200).json(
+            new ApiResponse(200, {data: userData}, 'All notifications marked as read')
+        );
+    } catch (error) {
+        console.error("Mark as read error:", error);
+        throw new ApiError(500, 'Error marking notifications as read');
+    }
+});
 
 const deleteAllNotificationsController = asyncHandler(async(req,res)=>{
-    const admin = await User.findOne({ _id: req.body.userId })
-
-    admin.seennotifications=[]
-
-    admin.notifications = []
-
-    const updateAdmin = await admin.save()
-
-    updateAdmin.password = undefined
-
-    res.status(200).send(
-        new ApiResponse(200,updateAdmin,'All Notifications are deleted.')
-    )
-})
+    try {
+        const user = await User.findOne({ _id: req.body.userId });
+        
+        if (!user) {
+            throw new ApiError(404, 'User not found');
+        }
+        
+        user.seennotifications = [];
+        user.notifications = [];
+        
+        await user.save();
+        
+        const userData = user.toObject ? user.toObject() : user;
+        
+        return res.status(200).json(
+            new ApiResponse(200, {data: userData}, 'All notifications deleted successfully')
+        );
+    } catch (error) {
+        console.error("Delete notifications error:", error);
+        throw new ApiError(500, 'Error deleting notifications');
+    }
+});
 
 const getDocController = asyncHandler(async(req,res)=>{
     const doctor = await Doctor.find({status:'Approved'})
@@ -256,6 +302,7 @@ export {
     changePasswordController,
     applyDoctorController,
     getAllNotificationsController,
+    markAllNotificationsReadController,
     deleteAllNotificationsController,
     getDocController,
     bookAppointmentController,

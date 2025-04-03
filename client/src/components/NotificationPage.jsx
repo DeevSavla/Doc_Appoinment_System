@@ -21,7 +21,7 @@ function NotificationPage() {
       try {
         dispatch(showloading());
         const res = await axios.post(
-         `${baseUrl}/user/get-all-notifications`,
+          `${baseUrl}/user/mark-all-as-read`,
           {
             userId: user.data._id,
           },
@@ -32,18 +32,18 @@ function NotificationPage() {
           }
         );
         dispatch(hideloading());
-        if (res.data) {
-          message.success('All Notifications Read.');
-          dispatch(setUser({ ...user, data: { ...user.data, notifications: res.data.notifications } }));
+        if (res.data && res.data.success) {
+          message.success('All Notifications Marked as Read');
+          dispatch(setUser(res.data.data));
         } else {
-          message.error('Error in reading.');
+          message.error('Error marking notifications as read');
         }
       } catch (error) {
         dispatch(hideloading());
         if (error.response?.data?.message) {
           message.error(error.response.data.message);
         } else {
-          message.error("Error while reading Notifications.");
+          message.error("Error while marking notifications as read");
         }
       }
     };
@@ -61,19 +61,18 @@ function NotificationPage() {
           }
         );
         dispatch(hideloading());
-        console.log(res.data)
-        if (res.data) {
-          message.success('All Notifications Deleted.');
-          dispatch(setUser({ ...user, data: { ...user.data, seennotifications: res.data.seennotifications } }));
+        if (res.data && res.data.success) {
+          message.success('All Notifications Deleted');
+          dispatch(setUser(res.data.data));
         } else {
-          message.error('Error in deleting.');
+          message.error('Error deleting notifications');
         }
       } catch (error) {
         dispatch(hideloading());
         if (error.response?.data?.message) {
           message.error(error.response.data.message);
         } else {
-          message.error("Error while deleting Notifications.");
+          message.error("Error while deleting notifications");
         }
       }
     };

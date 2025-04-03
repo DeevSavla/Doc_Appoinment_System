@@ -18,6 +18,7 @@ import BookingPage from './components/BookingPage'
 import AppointmentPage from './components/AppointmentPage'
 import Services from './components/Services'
 import Contact from './components/Contact'
+import AdminProfile from './components/Admin/AdminProfile'
 
 function App() {
   const { loading } = useSelector(state => state.alerts)
@@ -35,7 +36,15 @@ function App() {
           <Route path='/homepage' element={<ProtectedRoute><HomePage /></ProtectedRoute>} />
           <Route path='/notificationpage' element={<ProtectedRoute><NotificationPage/></ProtectedRoute>} />
           <Route path='/admin/users' element={<ProtectedRoute><Users/></ProtectedRoute>}/>
-          <Route path='/admin/doctors' element={<ProtectedRoute><Doctors/></ProtectedRoute>}/>
+          <Route path='/admin/doctors' element={<ProtectedRoute isAdmin>
+            <Doctors />
+          </ProtectedRoute>} />
+          <Route path='/admin/profile' element={<ProtectedRoute isAdmin>
+            <AdminProfile />
+          </ProtectedRoute>} />
+          <Route path='/admin/user/:id' element={<ProtectedRoute isAdmin>
+            <Users />
+          </ProtectedRoute>} />
           <Route path='/doctor/profile/:id' element={<ProtectedRoute><Profile/></ProtectedRoute>} />
           <Route path='/doctor/booking-appointment/:doctorId' element={<ProtectedRoute><BookingPage/></ProtectedRoute>} />
           <Route path='/doctor/appointments/:doctorId' element={<ProtectedRoute><AppointmentPage/></ProtectedRoute>} />

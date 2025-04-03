@@ -32,7 +32,7 @@ export const userMenu = [
     },
     {
       name: "Profile",
-      path: "/profile",
+      path: "/admin/profile",
       icon: "fa-solid fa-user",
     },
   ];

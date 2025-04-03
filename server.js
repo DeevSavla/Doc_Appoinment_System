@@ -16,14 +16,19 @@ const app = express()
 app.use(express.json())
 app.use(morgan('dev'))
 
-app.use(cors());
-
+// Configure CORS to allow requests from frontend
+app.use(cors({
+  origin: ['http://localhost:5173','http://localhost:8080'], // Your frontend URL
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
 
 app.use('/user',userRouter)
 app.use('/admin',adminRouter)
 app.use('/doctor',doctorRouter)
 
-const port = process.env.PORT || 8080
+const port = process.env.PORT
 
 app.listen(port,()=>{
     console.log(`Server running in ${process.env.PORT}`)

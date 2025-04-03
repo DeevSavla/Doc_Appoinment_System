@@ -6,6 +6,7 @@ import {loginController,
         applyDoctorController,
         getAllNotificationsController,
         deleteAllNotificationsController,
+        markAllNotificationsReadController,
         getDocController,
         bookAppointmentController,
         bookingAvailabilityController,
@@ -20,6 +21,7 @@ userRouter.post('/getUserData',authmiddleware,authController)
 userRouter.post('/changepassword',changePasswordController)
 userRouter.post('/apply-doctor',authmiddleware,applyDoctorController)
 userRouter.post('/get-all-notifications',authmiddleware,getAllNotificationsController)
+userRouter.post('/mark-all-as-read',authmiddleware,markAllNotificationsReadController)
 userRouter.post('/delete-all-notifications',authmiddleware,deleteAllNotificationsController)
 userRouter.post('/getdoctor',authmiddleware,getDocController)
 userRouter.post('/book-appointment',authmiddleware,bookAppointmentController)

@@ -17,38 +17,51 @@ function Register() {
       dispatch(showloading())
       const res = await axios.post(`${baseUrl}/user/register`, values)
       dispatch(hideloading())
-      if (res.data) {
+      
+      // Check if response exists and has data property
+      if (res && res.data && res.data.success) {
         message.success('Registered Successfully');
         navigate('/')
       } else {
-        message.error('Register Issue')
+        // If response exists but success is false
+        message.error(res?.data?.message || 'Registration failed')
       }
     }
     catch (error) {
       dispatch(hideloading())
-      if (error.response.data.message) {
+      console.error('Registration error:', error)
+      
+      // Safe error handling without assuming error.response.data exists
+      if (error.response && error.response.data && error.response.data.message) {
         message.error(error.response.data.message)
-      }
-      else {
-        message.error('Registration Failed')
+      } else if (error.message) {
+        message.error(`Error: ${error.message}`)
+      } else {
+        message.error('Registration failed. Please try again.')
       }
     }
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-4xl w-full flex bg-white rounded-xl shadow-2xl overflow-hidden">
-        <div className="w-1/2 hidden md:block bg-blue-50">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-teal-50 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-4xl w-full flex bg-white rounded-xl shadow-xl overflow-hidden transform hover:scale-[1.01] transition-transform duration-300">
+        <div className="w-1/2 hidden md:block relative">
+          <div className="absolute inset-0 bg-gradient-to-br from-blue-400/20 to-teal-300/20 z-10"></div>
           <img
             src={signupImage}
             alt="Healthcare Registration"
             className="object-cover w-full h-full"
           />
+          <div className="absolute inset-0 flex flex-col justify-end p-8 bg-gradient-to-t from-blue-900/90 via-blue-900/50 to-transparent text-white z-20">
+            <h3 className="text-2xl font-bold mb-2">Join Our Healthcare Platform</h3>
+            <p className="text-sm opacity-90 mb-6">Access quality healthcare services and professionals</p>
+          </div>
         </div>
         <div className="w-full md:w-1/2 p-8">
           <div className="text-center mb-8">
             <h2 className="text-3xl font-bold text-gray-800">Create Account</h2>
-            <p className="mt-2 text-sm text-gray-600">Join our healthcare platform</p>
+            <div className="h-1 w-16 bg-gradient-to-r from-blue-500 to-teal-400 mx-auto rounded-full my-4"></div>
+            <p className="text-gray-600">Join our healthcare platform today</p>
           </div>
           <Form
             name="register"
@@ -57,19 +70,19 @@ function Register() {
             layout="vertical"
           >
             <Form.Item
-              label={<span className="text-gray-700">Username</span>}
+              label={<span className="text-gray-700 font-medium">Username</span>}
               name="username"
               rules={[{ required: true, message: 'Please enter your username' }]}
             >
               <Input
-                prefix={<i className="fas fa-user text-gray-400" />}
-                className="rounded-lg py-2"
+                prefix={<i className="fas fa-user text-blue-500 opacity-70"></i>}
+                className="rounded-lg py-2 px-4 bg-gray-50 hover:bg-gray-100 transition-colors duration-200 border-0 shadow-sm"
                 placeholder="Enter your username"
               />
             </Form.Item>
 
             <Form.Item
-              label={<span className="text-gray-700">Email Address</span>}
+              label={<span className="text-gray-700 font-medium">Email Address</span>}
               name="email"
               rules={[
                 { required: true, message: 'Please enter your email' },
@@ -77,14 +90,14 @@ function Register() {
               ]}
             >
               <Input
-                prefix={<i className="fas fa-envelope text-gray-400" />}
-                className="rounded-lg py-2"
+                prefix={<i className="fas fa-envelope text-blue-500 opacity-70"></i>}
+                className="rounded-lg py-2 px-4 bg-gray-50 hover:bg-gray-100 transition-colors duration-200 border-0 shadow-sm"
                 placeholder="Enter your email"
               />
             </Form.Item>
 
             <Form.Item
-              label={<span className="text-gray-700">Password</span>}
+              label={<span className="text-gray-700 font-medium">Password</span>}
               name="password"
               rules={[
                 { required: true, message: 'Please enter your password' },
@@ -92,25 +105,34 @@ function Register() {
               ]}
             >
               <Input.Password
-                prefix={<i className="fas fa-lock text-gray-400" />}
-                className="rounded-lg py-2"
+                prefix={<i className="fas fa-lock text-blue-500 opacity-70"></i>}
+                className="rounded-lg py-2 px-4 bg-gray-50 hover:bg-gray-100 transition-colors duration-200 border-0 shadow-sm"
                 placeholder="Create a password"
               />
             </Form.Item>
 
             <div className="flex items-center justify-between mt-6">
-              <Link to="/login" className="text-sm font-medium text-blue-600 hover:text-blue-500">
+              <Link to="/login" className="text-sm font-medium text-blue-600 hover:text-blue-800 transition-colors duration-200">
                 Already have an account?
               </Link>
             </div>
 
             <button
               type="submit"
-              className="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-150 mt-6"
+              className="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-md text-sm font-medium text-white bg-gradient-to-r from-blue-600 to-teal-500 hover:from-blue-700 hover:to-teal-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200 mt-6"
             >
+              <i className="fas fa-user-plus mr-2"></i>
               Create Account
             </button>
           </Form>
+          
+          <div className="mt-8 pt-6 border-t border-gray-200">
+            <p className="text-center text-xs text-gray-500">
+              By creating an account, you agree to our
+              <a href="#" className="text-blue-600 hover:text-blue-800 ml-1">Terms of Service</a> and
+              <a href="#" className="text-blue-600 hover:text-blue-800 ml-1">Privacy Policy</a>
+            </p>
+          </div>
         </div>
       </div>
     </div>
