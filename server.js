@@ -6,6 +6,7 @@ import { connectDB } from './config/database.js';
 import { userRouter } from './routes/user.routes.js';
 import {adminRouter} from './routes/admin.routes.js'
 import { doctorRouter } from './routes/doctor.routes.js';
+import { chatbotRouter } from './routes/chatbot.routes.js';
 
 config()
 
@@ -26,6 +27,7 @@ app.use(cors({
 app.use('/user',userRouter)
 app.use('/admin',adminRouter)
 app.use('/doctor',doctorRouter)
+app.use('/chatbot',chatbotRouter)
 
 const port = process.env.PORT
 
