@@ -18,7 +18,7 @@ app.use(morgan('dev'))
 
 // Configure CORS to allow requests from frontend
 app.use(cors({
-  origin: ['http://localhost:5173','http://localhost:8080'], // Your frontend URL
+  origin: ['http://localhost:5173','http://localhost:8080','https://doc-appoinment-system.onrender.com'], // Your frontend URL
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
