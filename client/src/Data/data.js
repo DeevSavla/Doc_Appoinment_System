@@ -9,6 +9,11 @@ export const userMenu = [
       path: "/apply-doctor",
       icon: "fa-solid fa-user-doctor",
     },
+    {
+      name: "MediBot",
+      path: "/chatbot",
+      icon: "fa-solid fa-robot",
+    },
   ];
   
 
@@ -34,5 +39,10 @@ export const userMenu = [
       name: "Profile",
       path: "/admin/profile",
       icon: "fa-solid fa-user",
+    },
+    {
+      name: "MediBot",
+      path: "/chatbot",
+      icon: "fa-solid fa-robot",
     },
   ];

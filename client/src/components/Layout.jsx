@@ -33,6 +33,11 @@ function Layout({ children }) {
         path: `/doctor/profile/${user?.data._id}`,
         icon: "fa-solid fa-user",
       },
+      {
+        name: "MediBot",
+        path: "/chatbot",
+        icon: "fa-solid fa-robot",
+      },
     ];
 
     const [isOpen, setIsOpen] = useState(false);

@@ -19,6 +19,7 @@ import AppointmentPage from './components/AppointmentPage'
 import Services from './components/Services'
 import Contact from './components/Contact'
 import AdminProfile from './components/Admin/AdminProfile'
+import Chatbot from './components/Chatbot'
 
 function App() {
   const { loading } = useSelector(state => state.alerts)
@@ -48,6 +49,7 @@ function App() {
           <Route path='/doctor/profile/:id' element={<ProtectedRoute><Profile/></ProtectedRoute>} />
           <Route path='/doctor/booking-appointment/:doctorId' element={<ProtectedRoute><BookingPage/></ProtectedRoute>} />
           <Route path='/doctor/appointments/:doctorId' element={<ProtectedRoute><AppointmentPage/></ProtectedRoute>} />
+          <Route path='/chatbot' element={<ProtectedRoute><Chatbot/></ProtectedRoute>} />
         </Routes>
       )}
     </BrowserRouter>
