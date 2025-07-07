@@ -5,7 +5,7 @@ import { baseUrl } from '../utilities/baseUrl';
 import { useSelector } from 'react-redux';
 import { Avatar, Input, Button, Spin, Tooltip, message, Divider, Typography } from 'antd';
 import { SendOutlined, RobotOutlined, UserOutlined, DeleteOutlined, HistoryOutlined, CloseCircleOutlined } from '@ant-design/icons';
-import { ReactMarkdown } from 'react-markdown'
+import ReactMarkdown from 'react-markdown'
 
 const { Text, Title } = Typography;
 
