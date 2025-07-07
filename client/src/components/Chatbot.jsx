@@ -5,6 +5,7 @@ import { baseUrl } from '../utilities/baseUrl';
 import { useSelector } from 'react-redux';
 import { Avatar, Input, Button, Spin, Tooltip, message, Divider, Typography } from 'antd';
 import { SendOutlined, RobotOutlined, UserOutlined, DeleteOutlined, HistoryOutlined, CloseCircleOutlined } from '@ant-design/icons';
+import { ReactMarkdown } from 'react-markdown'
 
 const { Text, Title } = Typography;
 
@@ -413,7 +414,7 @@ function Chatbot() {
                             : 'bg-white text-gray-800 border border-gray-200 rounded-tl-none'
                         }`}
                       >
-                        <div className="text-sm whitespace-pre-wrap">{msg.content}</div>
+                        <div className="text-sm whitespace-pre-wrap"><ReactMarkdown>{msg.content}</ReactMarkdown></div>
                         <div className={`text-xs mt-1 ${msg.role === 'user' ? 'text-blue-100' : 'text-gray-400'}`}>
                           {formatDate(msg.createdAt)}
                         </div>
