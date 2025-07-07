@@ -103,7 +103,7 @@ const sendMessageController = asyncHandler(async (req, res) => {
     const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
     
     // Use the correct model name
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro" });
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
     
     // Create a proper prompt with system instructions
     let prompt = "You are MediBot, a helpful healthcare assistant designed to provide general medical information, assist with appointment scheduling, and answer health-related questions. You should be professional, compassionate, and accurate. Always remind users that you do not replace professional medical advice, diagnosis, or treatment.\n\n";
