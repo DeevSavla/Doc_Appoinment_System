@@ -242,6 +242,26 @@ const getDocController = asyncHandler(async(req,res)=>{
 })
 
 const bookAppointmentController = asyncHandler(async(req,res)=>{
+    const { doctorId, date, time } = req.body;
+    
+    // Check for exact time conflict
+    const existingAppointment = await Appointment.findOne({
+        doctorId,
+        date,
+        time
+    });
+
+    if (existingAppointment) {
+        throw new ApiError(400, 'Doctor is not available at this time.');
+    }
+
+    // Check for 1-hour buffer conflicts
+    const hasBufferConflict = await checkOneHourBuffer(doctorId, date, time);
+    
+    if (hasBufferConflict) {
+        throw new ApiError(400, 'Doctor is not available. Please book at least 1 hour before or after existing appointments.');
+    }
+
     req.body.status = 'Pending'
     const newAppointment = new Appointment(req.body)
     await newAppointment.save()
@@ -260,6 +280,52 @@ const bookAppointmentController = asyncHandler(async(req,res)=>{
     )
 })
 
+// Helper function to check for 1-hour buffer conflicts
+const checkOneHourBuffer = async (doctorId, date, requestedTime) => {
+    // Convert time to minutes for easier calculation
+    function timeToMinutes(timeStr) {
+        const [hours, minutes] = timeStr.split(':').map(Number);
+        return hours * 60 + minutes;
+    }
+    
+    // Convert minutes back to time string
+    function minutesToTime(minutes) {
+        const hours = Math.floor(minutes / 60);
+        const mins = minutes % 60;
+        return `${hours.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}`;
+    }
+    
+    const requestedMinutes = timeToMinutes(requestedTime);
+    const bufferMinutes = 60; // 1 hour buffer
+    
+    // Calculate the time range to check (1 hour before and after)
+    const startBufferMinutes = requestedMinutes - bufferMinutes;
+    const endBufferMinutes = requestedMinutes + bufferMinutes;
+    
+    // Convert back to time strings
+    const startBufferTime = minutesToTime(startBufferMinutes);
+    const endBufferTime = minutesToTime(endBufferMinutes);
+    
+    // Find all appointments for this doctor on this date
+    const existingAppointments = await Appointment.find({
+        doctorId,
+        date,
+        status: { $ne: 'Cancelled' } // Exclude cancelled appointments
+    });
+    
+    // Check if any existing appointment falls within the buffer range
+    for (const appointment of existingAppointments) {
+        const appointmentMinutes = timeToMinutes(appointment.time);
+        
+        // Check if the existing appointment is within 1 hour of the requested time
+        if (appointmentMinutes >= startBufferMinutes && appointmentMinutes <= endBufferMinutes) {
+            return true; // Conflict found
+        }
+    }
+    
+    return false; // No conflicts
+};
+
 const bookingAvailabilityController = asyncHandler(async (req, res) => {
     
     const { doctorId, date, time } = req.body;
@@ -271,27 +337,47 @@ const bookingAvailabilityController = asyncHandler(async (req, res) => {
 
     const [startTime, finishTime] = doctor.timings.split("-");
 
+    console.log(startTime, finishTime);
+
     function isTimeInRange(time, start, finish) {
-        return time >= start && time <= finish;
+        console.log(time, start, finish);
+        
+        // Convert time strings to minutes for proper comparison
+        function timeToMinutes(timeStr) {
+            const [hours, minutes] = timeStr.split(':').map(Number);
+            return hours * 60 + minutes;
+        }
+        
+        const timeMinutes = timeToMinutes(time);
+        const startMinutes = timeToMinutes(start);
+        const finishMinutes = timeToMinutes(finish);
+        
+        return timeMinutes >= startMinutes && timeMinutes <= finishMinutes;
     }
 
     if (!isTimeInRange(time, startTime, finishTime)) {
         throw new ApiError(400, 'Requested time is outside the available timings.');
     }
 
+    // Check for exact time conflict
     const appointment = await Appointment.findOne({
         doctorId,
         date,
         time
     });
 
-    console.log(appointment);
-
     if (appointment) {
         throw new ApiError(400, 'Doctor is not available at this time.');
-    } else {
-        res.status(200).send(new ApiResponse(200, 'Doctor is available at this time.'));
     }
+
+    // Check for 1-hour buffer conflicts
+    const hasBufferConflict = await checkOneHourBuffer(doctorId, date, time);
+    
+    if (hasBufferConflict) {
+        throw new ApiError(400, 'Doctor is not available. Please book at least 1 hour before or after existing appointments.');
+    }
+
+    res.status(200).send(new ApiResponse(200, 'Doctor is available at this time.'));
 });
 
 

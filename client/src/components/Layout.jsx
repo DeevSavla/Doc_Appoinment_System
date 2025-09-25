@@ -4,7 +4,7 @@ import { Link,useLocation, useNavigate } from 'react-router-dom'
 import logo from '../photos/logo.png'
 import { useDispatch, useSelector } from 'react-redux'
 import Spinner from './Spinner'
-import { message, Badge, Avatar } from 'antd'
+import { message, Badge } from 'antd'
 import { setUser } from '../store/features/userSlice'
 
 function Layout({ children }) {
@@ -93,9 +93,15 @@ function Layout({ children }) {
 
         <main className="flex-1 flex flex-col gap-6">
           <header className="h-16 bg-white rounded-lg shadow-sm p-4 flex items-center border border-gray-300">
-            <div onClick={()=>{navigate('/notificationpage')}}><Badge count={user?.data?.notifications?.length ?? 0}>
-              <Avatar shape="square" size="large" />
-            </Badge></div>
+            <div onClick={()=>{navigate('/notificationpage')}} className="cursor-pointer">
+              <Badge count={user?.data?.notifications?.length ?? 0}>
+                <img 
+                  src="/favicon.svg" 
+                  alt="Notifications" 
+                  className="w-8 h-8 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200"
+                />
+              </Badge>
+            </div>
             <p className="ml-auto text-gray-800 text-xl">{user.data.username}</p>
           </header>
 
